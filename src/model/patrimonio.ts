@@ -1,6 +1,6 @@
 import { Categoria } from "./categoria";
 import { Departamento } from "./departamento";
-import { Fornecedor } from "./fornecedores";
+import { Fornecedor } from "./fornecedor";
 import { Origem } from "./origem";
 
 export class Patrimonio{

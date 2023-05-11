@@ -1,15 +1,12 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
-import { patrimonioController } from './controller/patrimonioController';
-import { categoriaController } from './controller/categoriaController';
+import { appHouse } from './routes';
 
 const app = Fastify()
 
-export default app;
-
 app.register(cors)
 
-app.get("/index", () => {
+app.get("/hello", () => {
 	return "Hello World"
 })
 app.listen({
@@ -19,6 +16,4 @@ app.listen({
     console.log('Http Server running')
 })
 
-
-app.get('/patrimonio', patrimonioController.index);
-app.get('/categoria', categoriaController.index);
+appHouse(app);

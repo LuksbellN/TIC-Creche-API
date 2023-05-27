@@ -1,0 +1,39 @@
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+::-webkit-scrollbar-thumb {
+    background: #CECECE; 
+    border-radius: 8px;
+  }
+
+
+body {
+    margin: 0;
+    background-color: #213670ee!important;
+    font-family: 'Roboto', sans-serif;
+}
+
+section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    margin: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #0d0e42!important;
+    width: 360px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 1px #319c51;
+}
+
+.input-email{
+    padding-top: 150px;
+}

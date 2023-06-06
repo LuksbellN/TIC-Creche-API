@@ -1,0 +1,82 @@
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+::-webkit-scrollbar-thumb {
+    background: #CECECE; 
+    border-radius: 8px;
+  }
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    color: #FFFFFF; /* Cor do texto */
+  }
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 80px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px;
+  }
+
+  th {
+    background-color: #ADD8E6; /* Azul claro */
+    color: #000000; /* Cor do texto */
+  }
+  tr {
+    background-color: #F0F8FF; /* Azul claro mais claro */
+    color: #000000;
+  }
+
+    /* Estilos para o cabeçalho de consulta */
+    .search-container {
+        text-align: right;
+        background-color: white;
+        color: black;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #F0F8FF; /* Cor de fundo do cabeçalho de consulta */
+        border-radius: 19px;
+      }
+  
+      .search-input {
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+      }
+  
+      .search-button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        background-color: #4CAF50; /* Verde */
+        color: white;
+        cursor: pointer;
+      }
+  
+      .search-button:hover {
+        background-color: #45a049; /* Verde mais escuro */
+        
+      }
+      .search-label {
+        text-align: center;
+      }
+  
+      .search-date {
+        margin-right: 10px;
+      }
+  
+      .container {
+        margin-bottom: 15px;
+        text-align: right;
+        background-color: white;
+        color: black;
+        padding: 10px;
+      }

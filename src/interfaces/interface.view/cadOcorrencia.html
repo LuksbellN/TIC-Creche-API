@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <title> Login NV Creche</title>
+    <meta charset="UTF-8" />
+    <style></style>
+    <link rel="stylesheet" type="text/css" href="./style.css/cadOcorrencia.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Cadastro de Ocorrências</h1>
+    <form>
+
+        <label for="patrimonioId">Patrimônio ID:</label>
+        <input type="text" id="patrimonioId" name="patrimonioId" placeholder="Digite o ID do patrimônio" required>
+        <label for="tipoOcorrencia">Tipo de Ocorrência:</label>
+        <select id="tipoOcorrencia" name="tipoOcorrencia" required>
+            <option value="">Selecione o tipo de ocorrência</option>
+            <option value="tipo1">Tipo 1</option>
+            <option value="tipo2">Tipo 2</option>
+            <!-- Adicione mais opções conforme necessário -->
+        </select>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" placeholder="Digite a descrição da ocorrência" required></textarea>
+
+        <label for="dataOcorrencia">Data da Ocorrência:</label>
+        <input type="date" id="dataOcorrencia" name="dataOcorrencia" required>
+
+        <button type="submit">Cadastrar Ocorrência</button>
+    </form>
+</body>
+
+</html>

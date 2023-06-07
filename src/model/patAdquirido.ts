@@ -1,7 +1,6 @@
 import { Categoria } from "./categoria";
 import { Departamento } from "./departamento";
 import { Fornecedor } from "./fornecedor";
-import { Origem } from "./origem";
 import { Patrimonio } from "./patrimonio";
 
 class PatAdquirido extends Patrimonio{
@@ -12,12 +11,12 @@ class PatAdquirido extends Patrimonio{
     //#region Construtor
     constructor(id_patrimonio: number, nome: string,
         departamento: Departamento, categoria: Categoria,
-        estado: string, fornecedor: Fornecedor,
-        data_aquisicao: Date, origem: Origem, valor: number, 
-        imagem_url?: string){
+        estado: number, fornecedor: Fornecedor,
+        data_aquisicao: Date, valor: number, 
+        imagem_url: string | null){
             super(id_patrimonio, nome, departamento, 
                 categoria, estado, fornecedor, 
-                data_aquisicao, origem, imagem_url);
+                data_aquisicao, imagem_url);
             this.valor = valor;
         } 
     //#endregion

@@ -1,9 +1,8 @@
-import { Token } from "./token";
 import { Departamento } from "./departamento"
 
 export class Usuario {
     //#region Propriedades
-    private id_usuario : number;
+    private id_usuario : number | null;
     private userName : string;
     private email : string;
     private senha : string;
@@ -11,21 +10,24 @@ export class Usuario {
     //#endregion
 
     //#region Construtor
-    constructor(id_usuario : number, userName : string, email : string,
-        senha : string , departamento : Departamento, token : Token){
+    constructor(id_usuario : number | null, userName : string, email : string,
+        senha : string , departamento : Departamento){
         this.id_usuario = id_usuario;
         this.userName = userName;
         this.email = email;
         this.senha =  senha;
         this.departamento = departamento;
     }
+
     //#endregion
 
     //#region Gets
-    getId(): number{ return this.id_usuario };
+    getId(): number | null{ return this.id_usuario };
     getUserName(): string{ return this.userName };
     getEmail(): string{ return this.email };
-    getDepartamento(): Departamento { return this.departamento };
+    getDepartamento(): Departamento  { return this.departamento };
+    getSenha(): string { return this.senha }
+    getIdDepartamento(): number { return this.departamento.getId()}
     //#endregion
 
     //#region Sets
@@ -53,12 +55,16 @@ export class Usuario {
         }
     }
 
+    setSenha(senha: string): void {
+        this.senha = senha;
+    }
+
     //#endregion
 
     //#region Métodos
 
     ValidarUserName(userName: string): boolean{
-        // Validação de nome de usuário no banco de dados(username é UK)
+        // Validação de nome de usuário no banco de dados
         return true;
     }
 

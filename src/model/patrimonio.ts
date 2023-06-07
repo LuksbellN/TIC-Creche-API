@@ -1,7 +1,6 @@
 import { Categoria } from "./categoria";
 import { Departamento } from "./departamento";
 import { Fornecedor } from "./fornecedor";
-import { Origem } from "./origem";
 
 export class Patrimonio{
     //#region Propriedades
@@ -28,7 +27,7 @@ export class Patrimonio{
             this.estado = estado;
             this.fornecedor = fornecedor;
             this.data_aquisicao = data_aquisicao;
-            this.imagem_url = imagem_url != null ? imagem_url : null; 
+            this.imagem_url = imagem_url; 
     }
     //#endregion
 

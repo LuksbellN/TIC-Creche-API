@@ -13,6 +13,10 @@ export class PatrimonioService implements IPatrimonioService{
     constructor() {
         this.patRepository = new PatrimonioRepository();
     }
+    async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
+        const result: RespostaApi = await this.patRepository.createPatrimonio(filtroPat)
+        return result;
+    }
 
     public getPatrimonio(id: number): Patrimonio {
 

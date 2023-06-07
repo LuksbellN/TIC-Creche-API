@@ -17,6 +17,23 @@ export class patrimonioController extends BaseController{
         this.patService = new PatrimonioService(); 
     }
 
+    public async ResgatarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtro = super.resgatarNovoPatrimonio(request)
+            
+            result = await this.patService.createPatrimonio(filtro)
+            console.log(result)
+    
+            return result;
+        } catch(error) {
+            console.log(error)
+            result.sucesso = false
+            return result
+        }
+    }
+
     public async ListagemPatrimonios(request: FastifyRequest): Promise<RespostaApi>{
         try{
             const filtro = super.resgatarFiltroPat(request)
@@ -32,6 +49,56 @@ export class patrimonioController extends BaseController{
         }
 
     }
+
+    public async CadastrarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtro = super.resgatarNovoPatrimonio(request)
+            
+            result = await this.patService.createPatrimonio(filtro)
+            console.log(result)
+    
+            return result;
+        } catch(error) {
+            console.log(error)
+            result.sucesso = false
+            return result
+        }
+    }
+    public async AtualizarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtro = super.resgatarNovoPatrimonio(request)
+            
+            result = await this.patService.createPatrimonio(filtro)
+            console.log(result)
+    
+            return result;
+        } catch(error) {
+            console.log(error)
+            result.sucesso = false
+            return result
+        }
+    }
+    public async DeletarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtro = super.resgatarNovoPatrimonio(request)
+            
+            result = await this.patService.createPatrimonio(filtro)
+            console.log(result)
+    
+            return result;
+        } catch(error) {
+            console.log(error)
+            result.sucesso = false
+            return result
+        }
+    }
+
 
 
 }

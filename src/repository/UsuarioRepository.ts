@@ -11,10 +11,6 @@ export class UsuarioRepository implements IUsuarioRepository {
         let resp = new RespostaApi();
 
         try {
-            console.log(user.getUserName())
-            console.log(user.getEmail())
-            console.log(user.getSenha())
-            console.log(user.getIdDepartamento())
             
             let usuario = await prisma.usuario.create({
                 data: {

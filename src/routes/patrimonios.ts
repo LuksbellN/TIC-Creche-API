@@ -15,16 +15,23 @@ export async function patrimonioRoutes(app: FastifyInstance) {
     return result;
   })
 
-  app.get('/patrimonio', async (request, reply) => {
-    console.log('ole')
+  app.get('/patrimonio/:id', async (request, reply) => {
+    const result: RespostaApi = await patController.ResgatarPatrimonio(request);
+    return result
   })
 
-  app.post('/memories', async (request) => {
+  app.post('/patrimonio', async (request) => {
+    const result: RespostaApi = await patController.CadastrarPatrimonio(request);
+    return result
   })
 
-  app.put('/memories/:id', async (request, reply) => {
+  app.put('/patrimonio/:id', async (request, reply) => {
+    const result: RespostaApi = await patController.AtualizarPatrimonio(request);
+    return result
   })
 
-  app.delete('/memories/:id', async (request, reply) => {
+  app.delete('/patrimonio/:id', async (request, reply) => {
+    const result: RespostaApi = await patController.DeletarPatrimonio(request);
+    return result
   })
 }

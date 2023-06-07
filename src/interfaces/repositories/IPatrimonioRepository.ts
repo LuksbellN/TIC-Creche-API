@@ -4,4 +4,5 @@ import RespostaApi from "../../model/respostaApi";
 export interface IPatrimonioRepository{
     getPatrimonio(id: number): Patrimonio;
     getPatrimonios(filtro: any): Promise<RespostaApi>;
+    createPatrimonio(filtroPat: any): Promise<RespostaApi>
 }

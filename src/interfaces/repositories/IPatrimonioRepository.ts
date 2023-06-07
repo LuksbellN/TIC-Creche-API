@@ -2,4 +2,5 @@ import { Patrimonio } from "../../model/patrimonio";
 
 export interface IPatrimonioRepository{
     getPatrimonio(id: number): Patrimonio;
+    getPatrimonios(filtro: any): Promise<any[]>;
 }

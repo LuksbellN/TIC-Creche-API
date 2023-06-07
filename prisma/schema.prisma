@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id              Int          @id @default(autoincrement())
+  email           String       @unique
+  userName        String
+  senha           String
+  departamento    Departamento @relation(fields: [id_departamento], references: [id])
+  id_departamento Int
+}
+
+model Departamento {
+  id                Int          @id @default(autoincrement())
+  nome_departamento String       @unique
+  Usuarios          Usuario[]
+  Patrimonios       Patrimonio[]
+}
+
+model Patrimonio {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  dataAquisicao DateTime @default(now())
+  imagem_url    String?
+  estado        Int      @default(5)
+
+  departamento    Departamento @relation(fields: [id_departamento], references: [id])
+  id_departamento Int
+
+  categoria    Categoria @relation(fields: [id_categoria], references: [id])
+  id_categoria Int
+
+  fornecedor    Fornecedor @relation(fields: [id_fornecedor], references: [id])
+  id_fornecedor Int
+
+  PatrimoniosPref        Pat_prefeitura[]
+  PatrimoniosDoacao      Pat_doacao[]
+  PatrimoniosAdquirido   Pat_adquirido[]
+  Patrimonio_ocorrencias Patrimonio_ocorrencia[]
+}
+
+model Categoria {
+  id             Int    @id @default(autoincrement())
+  nome_categoria String
+
+  Patrimonios Patrimonio[]
+}
+
+model Fornecedor {
+  id             Int     @id @default(autoincrement())
+  nome_fornecedor String
+  documento      String?
+
+  Patrimonios Patrimonio[]
+}
+
+model Pat_prefeitura {
+  id_pat_prefeitura Int    @id @default(autoincrement())
+  valor             Float
+  placa             String
+
+  patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
+  id_patrimonio Int @unique
+}
+
+model Pat_doacao {
+  id_pat_doacao Int    @id @default(autoincrement())
+  nome_doador   String
+  telefone      String
+
+  patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
+  id_patrimonio Int @unique
+}
+
+model Pat_adquirido {
+  id_pat_adquirido Int   @id @default(autoincrement())
+  valor            Float
+
+  patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
+  id_patrimonio Int @unique
+}
+
+model TiposOcorrencia {
+  id   Int    @id @default(autoincrement())
+  nome String
+
+  ocorrencias Ocorrencia[]
+}
+
+model Ocorrencia {
+  id   Int    @id @default(autoincrement())
+  nome String
+
+  tipoOcorrencia     TiposOcorrencia @relation(fields: [id_tipo_ocorrencia], references: [id])
+  id_tipo_ocorrencia Int
+
+  Patrimonio_ocorrencias Patrimonio_ocorrencia[]
+}
+
+model Patrimonio_ocorrencia {
+  data_ocorrencia DateTime @default(now())
+  descricao       String
+
+  patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
+  id_patrimonio Int
+
+  ocorrencia    Ocorrencia @relation(fields: [id_ocorrencia], references: [id])
+  id_ocorrencia Int
+
+  @@id([id_patrimonio, id_ocorrencia])
+}

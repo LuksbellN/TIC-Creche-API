@@ -8,7 +8,6 @@ export class Usuario {
     private email : string;
     private senha : string;
     private departamento : Departamento;
-    private token : Token;
     //#endregion
 
     //#region Construtor
@@ -18,7 +17,6 @@ export class Usuario {
         this.userName = userName;
         this.email = email;
         this.senha =  senha;
-        this.token = token;
         this.departamento = departamento;
     }
     //#endregion
@@ -28,7 +26,6 @@ export class Usuario {
     getUserName(): string{ return this.userName };
     getEmail(): string{ return this.email };
     getDepartamento(): Departamento { return this.departamento };
-    getToken(): Token{ return this.token };
     //#endregion
 
     //#region Sets
@@ -56,14 +53,6 @@ export class Usuario {
         }
     }
 
-    setToken(token: Token): void | string{
-        let success: boolean = token.ValidarToken();
-        if(success){
-            this.token = token;
-        } else {
-            return "Token inválido"
-        }
-    }
     //#endregion
 
     //#region Métodos
@@ -75,8 +64,7 @@ export class Usuario {
 
     toString(): string{
         return ` O id do usuário é: ${this.id_usuario} \n O userName é: ${this.userName}
-            \n Email: ${this.email}
-            \n Token: ${this.token}`;
+            \n Email: ${this.email}`;
     }
 
     //#endregion

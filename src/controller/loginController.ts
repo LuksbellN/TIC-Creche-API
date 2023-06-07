@@ -1,4 +1,4 @@
-export class patrimonioController{
+export class loginController{
 
 
     public static login(request, reply){

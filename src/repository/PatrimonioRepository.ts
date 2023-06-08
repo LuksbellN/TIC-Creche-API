@@ -1,5 +1,4 @@
 import { IPatrimonioRepository } from "../interfaces/repositories/IPatrimonioRepository";
-import { Patrimonio } from "../model/patrimonio";
 import { prisma } from "../lib/prisma";
 import RespostaApi from "../model/respostaApi";
 
@@ -8,56 +7,59 @@ export class PatrimonioRepository implements IPatrimonioRepository {
   constructor() {
 
   }
-  async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
+
+  public async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
-        
-        let patrimonio = await prisma.patrimonio.create({
-            data: {
-                nome: filtroPat.nome,
-                dataAquisicao: filtroPat.dataAquisicao,
-                estado: filtroPat.estado,
-                id_departamento: filtroPat.id_departamento,
-                id_categoria: filtroPat.id_categoria,
-                id_fornecedor: filtroPat.id_fornecedor,
-                imagem_url: filtroPat.imagem_url ?? '',
-            }
-        })
 
-        filtroPat.id = patrimonio.id;
-        let res = {}
-        
-        if(filtroPat.tipo === "pref") {
-          res = await this.addPatPrefeitura(filtroPat)
-        } else if(filtroPat.tipo === "adq"){
-          res = await this.addPatAdquirido(filtroPat)
-        } else if(filtroPat.tipo === "dpa") {
-          res = await this.addPatDoacao(filtroPat)
+      let patrimonio = await prisma.patrimonio.create({
+        data: {
+          nome: filtroPat.nome,
+          dataAquisicao: filtroPat.dataAquisicao,
+          estado: filtroPat.estado,
+          id_departamento: filtroPat.id_departamento,
+          id_categoria: filtroPat.id_categoria,
+          id_fornecedor: filtroPat.id_fornecedor,
+          imagem_url: filtroPat.imagem_url ?? '',
         }
-        
+      })
 
-        resp.data = {
-            id: patrimonio.id,
-            tipo: filtroPat.tipo,
-            nome: patrimonio.nome,
-            dataAquisicao: patrimonio.dataAquisicao,
-            imagem_url: patrimonio.imagem_url,
-            id_departamento: patrimonio.id_departamento,
-            id_categoria: patrimonio.id_categoria,
-            id_fornecedor: patrimonio.id_fornecedor,
-            ...res
-        };
-        resp.sucesso = true;
-        return resp;
+      filtroPat.id = patrimonio.id;
+      let res = {}
+
+      if (filtroPat.tipo === "pref") {
+        res = await this.addPatPrefeitura(filtroPat)
+      } else if (filtroPat.tipo === "adq") {
+        res = await this.addPatAdquirido(filtroPat)
+      } else if (filtroPat.tipo === "dpa") {
+        res = await this.addPatDoacao(filtroPat)
+      }
+
+
+      resp.data = {
+        id: patrimonio.id,
+        tipo: filtroPat.tipo,
+        nome: patrimonio.nome,
+        dataAquisicao: patrimonio.dataAquisicao,
+        imagem_url: patrimonio.imagem_url,
+        id_departamento: patrimonio.id_departamento,
+        id_categoria: patrimonio.id_categoria,
+        id_fornecedor: patrimonio.id_fornecedor,
+        estado: patrimonio.estado,
+        ...res
+      };
+      resp.sucesso = true;
+      return resp;
     } catch (error) {
-        resp.data = null;
-        resp.sucesso = false;
-        resp.error = error;
-        return resp;
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
     }
   }
-  async getPatrimonios(filtro: any): Promise<RespostaApi> {
+
+  public async getPatrimonios(filtro: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     const tipoPref = filtro.tipo.includes('pref');
@@ -131,90 +133,266 @@ export class PatrimonioRepository implements IPatrimonioRepository {
   }
 
 
-  //TODO: Implementar conexão e acessar banco de dados
-  getPatrimonio(id: number): Patrimonio {
-    throw new Error("Method not implemented.");
-  }
-
-  async addPatPrefeitura(filtroPat: any): Promise<RespostaApi> {
+  public async getPatrimonio(filtro: { id: number }): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
-        
-        let patrimonioPref = await prisma.pat_prefeitura.create({
-            data: {
-                id_patrimonio: filtroPat.id,
-                valor: filtroPat.valor,
-                placa: filtroPat.placa
-            }
-        })
-        
-        resp.data = {
-          id_pat_prefeitura: patrimonioPref.id_pat_prefeitura,
-          valor: patrimonioPref.valor,
-          placa: patrimonioPref.placa
-        };
-        resp.sucesso = true;
-        return resp;
+      const result = await prisma.patrimonio.findUniqueOrThrow({
+        where: {
+          id: filtro.id
+        }
+      })
+
+
+      resp.data = result;
+      resp.sucesso = true;
+      return resp;
+
+
     } catch (error) {
-        resp.data = null;
-        resp.sucesso = false;
-        resp.error = error;
-        return resp;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp
     }
   }
-  async addPatAdquirido(filtroPat: any): Promise<RespostaApi> {
+
+  public async updatePatrimonio(filtroPat: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
-        
-        let patrimonioAdq = await prisma.pat_adquirido.create({
-            data: {
-                id_patrimonio: filtroPat.id,
-                valor: filtroPat.valor
-            }
-        })
-        
-        resp.data = {
-          id_pat_prefeitura: patrimonioAdq.id_pat_adquirido,
-          valor: patrimonioAdq.valor
-        };
-        resp.sucesso = true;
-        return resp;
+      
+      let patrimonio = await prisma.patrimonio.update({
+        where: {
+          id: filtroPat.id
+        },
+        data: {
+          nome: filtroPat.nome,
+          dataAquisicao: filtroPat.dataAquisicao,
+          estado: filtroPat.estado,
+          id_departamento: filtroPat.id_departamento,
+          id_categoria: filtroPat.id_categoria,
+          id_fornecedor: filtroPat.id_fornecedor,
+          imagem_url: filtroPat.imagem_url ?? '',
+        }
+      })
+
+      let res = {}
+
+      if (filtroPat.tipo === "pref") {
+        res = await this.updatePatPrefeitura(filtroPat)
+      } else if (filtroPat.tipo === "adq") {
+        res = await this.updatePatAdquirido(filtroPat)
+      } else if (filtroPat.tipo === "dpa") {
+        res = await this.updatePatDoacao(filtroPat)
+      }
+
+
+      resp.data = {
+        tipo: filtroPat.tipo,
+        nome: patrimonio.nome,
+        dataAquisicao: patrimonio.dataAquisicao,
+        imagem_url: patrimonio.imagem_url,
+        id_departamento: patrimonio.id_departamento,
+        id_categoria: patrimonio.id_categoria,
+        id_fornecedor: patrimonio.id_fornecedor,
+        estado: patrimonio.estado,
+        ...res
+      };
+      resp.sucesso = true;
+      return resp;
     } catch (error) {
-        resp.data = null;
-        resp.sucesso = false;
-        resp.error = error;
-        return resp;
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
     }
   }
-  async addPatDoacao(filtroPat: any): Promise<RespostaApi> {
+
+  public async deletePatrimonio(filtro: { id: number }): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
-        
-        let patrimonioDoa = await prisma.pat_doacao.create({
-            data: {
-                id_patrimonio: filtroPat.id,
-                nome_doador: filtroPat.nome_doador,
-                telefone: filtroPat.telefone
-            }
-        })
-        
-        resp.data = {
-          id_pat_doacao: patrimonioDoa.id_pat_doacao,
-          nome_doador: patrimonioDoa.nome_doador,
-          placa: patrimonioDoa.telefone
-        };
-        resp.sucesso = true;
-        return resp;
+      const result = await prisma.patrimonio.delete({
+        where: {
+          id: filtro.id
+        }
+      })
+
+      resp.data = result;
+      resp.sucesso = true;
+      return resp;
+
     } catch (error) {
-        resp.data = null;
-        resp.sucesso = false;
-        resp.error = error;
-        return resp;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp
     }
   }
 
+  public async addPatPrefeitura(filtroPat: any): Promise<RespostaApi> {
+    let resp = new RespostaApi();
 
+    try {
+
+      let patrimonioPref = await prisma.pat_prefeitura.create({
+        data: {
+          id_patrimonio: filtroPat.id,
+          valor: filtroPat.valor,
+          placa: filtroPat.placa
+        }
+      })
+
+      resp.data = {
+        id_pat_prefeitura: patrimonioPref.id_pat_prefeitura,
+        valor: patrimonioPref.valor,
+        placa: patrimonioPref.placa
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+  }
+
+  public async addPatAdquirido(filtroPat: any): Promise<RespostaApi> {
+    let resp = new RespostaApi();
+
+    try {
+
+      let patrimonioAdq = await prisma.pat_adquirido.create({
+        data: {
+          id_patrimonio: filtroPat.id,
+          valor: filtroPat.valor
+        }
+      })
+
+      resp.data = {
+        id_pat_prefeitura: patrimonioAdq.id_pat_adquirido,
+        valor: patrimonioAdq.valor
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+  }
+  public async addPatDoacao(filtroPat: any): Promise<RespostaApi> {
+    let resp = new RespostaApi();
+
+    try {
+
+      let patrimonioDoa = await prisma.pat_doacao.create({
+        data: {
+          id_patrimonio: filtroPat.id,
+          nome_doador: filtroPat.nome_doador,
+          telefone: filtroPat.telefone
+        }
+      })
+
+      resp.data = {
+        id_pat_doacao: patrimonioDoa.id_pat_doacao,
+        nome_doador: patrimonioDoa.nome_doador,
+        placa: patrimonioDoa.telefone
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+  }
+
+  private async updatePatPrefeitura(filtroPat: any): Promise<RespostaApi>{
+    let resp = new RespostaApi();
+
+    try {
+
+      let patrimonioPref = await prisma.pat_prefeitura.update({
+        where: {
+          id_pat_prefeitura: filtroPat.id_pat_prefeitura
+        },
+        data: {
+          valor: filtroPat.valor,
+          placa: filtroPat.placa
+        }
+      })
+
+      resp.data = {
+        valor: patrimonioPref.valor,
+        placa: patrimonioPref.placa
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+    
+  } 
+  private async updatePatAdquirido(filtroPat: any): Promise<RespostaApi>{
+    let resp = new RespostaApi();
+
+    try {
+
+      let patrimonioAdq = await prisma.pat_adquirido.update({
+        where: {
+          id_pat_adquirido: filtroPat.id_pat_adquirido
+        },
+        data: {
+          valor: filtroPat.valor
+        }
+      })
+
+      resp.data = {
+        valor: patrimonioAdq.valor
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+
+  } 
+  private async updatePatDoacao(filtroPat: any): Promise<RespostaApi>{
+    let resp = new RespostaApi();
+
+    try {
+
+      let patrimonioDoa = await prisma.pat_doacao.update({
+        where: {
+          id_pat_doacao: filtroPat.id_pat_doacao
+        },
+        data: {
+          nome_doador: filtroPat.nome_doador,
+          telefone: filtroPat.telefone
+        }
+      })
+
+      resp.data = {
+        nome_doador: patrimonioDoa.nome_doador,
+        telefone: patrimonioDoa.telefone
+      };
+      resp.sucesso = true;
+      return resp;
+    } catch (error) {
+      resp.data = null;
+      resp.sucesso = false;
+      resp.error = error;
+      return resp;
+    }
+
+  } 
 }

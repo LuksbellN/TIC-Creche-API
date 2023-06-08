@@ -13,7 +13,8 @@ export default class BaseController {
     }
   }
 
-  protected resgatarFiltroPat(request: FastifyRequest): any {
+  // Resgata o payload da query
+  protected resgatarPatrimonioQuery(request: FastifyRequest): any {
     const querySchema = z.object({
       tipo: z.union([z.string(), z.undefined()]),
       categoria: z.union([z.string(), z.undefined()]),
@@ -23,7 +24,13 @@ export default class BaseController {
       consulta: z.union([z.string(), z.undefined()])
     });
 
-    const { tipo, categoria, departamento, data_inicio, data_fim, consulta } = querySchema.parse(request.query)
+    const { 
+      tipo, 
+      categoria, 
+      departamento, 
+      data_inicio, 
+      data_fim, 
+      consulta } = querySchema.parse(request.query)
 
     let filtro: any = {};
 
@@ -64,7 +71,20 @@ export default class BaseController {
 
   }
 
-  protected resgatarNovoPatrimonio(request: FastifyRequest): any {
+  // Resgata payload id dos params
+  protected resgatarPatrimonioParam(request: FastifyRequest): {id: number}{
+    const patSchema = z.object({
+      id: z.string()
+    })
+    const { id } = patSchema.parse(request.params)
+    
+    return {
+      id: parseInt(id)
+    }
+  }
+
+  // Resgata o payload do body
+  protected resgatarPatrimonioBody(request: FastifyRequest): any {
     const patSchema = z.object({
       tipo: z.union([z.string(), z.undefined()]),
       nome: z.union([z.string(), z.undefined()]),
@@ -77,7 +97,10 @@ export default class BaseController {
       valor: z.union([z.string(), z.undefined()]),
       placa: z.union([z.string(), z.undefined()]),
       nomeDoador: z.union([z.string(), z.undefined()]),
-      telefone: z.union([z.string(), z.undefined()])
+      telefone: z.union([z.string(), z.undefined()]),
+      id_pat_prefeitura: z.union([z.string(), z.undefined()]),
+      id_pat_adquirido: z.union([z.string(), z.undefined()]),
+      id_pat_doacao: z.union([z.string(), z.undefined()])
     });
 
 
@@ -93,7 +116,10 @@ export default class BaseController {
       valor,
       placa,
       nomeDoador,
-      telefone } = patSchema.parse(request.body)
+      telefone,
+      id_pat_prefeitura,
+      id_pat_adquirido,
+      id_pat_doacao } = patSchema.parse(request.body)
 
     let filtro: any = {};
 
@@ -139,7 +165,15 @@ export default class BaseController {
       filtro.telefone = telefone;
     }
 
-
+    if (id_pat_prefeitura) {
+      filtro.id_pat_prefeitura = Number(id_pat_prefeitura);
+    }
+    if (id_pat_adquirido) {
+      filtro.id_pat_adquirido = Number(id_pat_adquirido);
+    }
+    if (id_pat_doacao) {
+      filtro.id_pat_doacao = Number(id_pat_doacao);
+    }
 
     return filtro;
 

@@ -10,28 +10,33 @@ export async function patrimonioRoutes(app: FastifyInstance) {
     await request.jwtVerify();
   })
 
-  app.get('/patrimonios', async (request) => {
+  // Resgatar a listagem de patrimônios conforme filtros
+  app.get('/patrimonio', async (request, reply) => {
     const result: RespostaApi = await patController.ListagemPatrimonios(request);
-    return result;
+    reply.send(result)
   })
 
+  // Resgatar Patrimônio pelo ID
   app.get('/patrimonio/:id', async (request, reply) => {
     const result: RespostaApi = await patController.ResgatarPatrimonio(request);
-    return result
+    reply.send(result)
   })
 
-  app.post('/patrimonio', async (request) => {
+  // Criar Patrimônio
+  app.post('/patrimonio', async (request, reply) => {
     const result: RespostaApi = await patController.CadastrarPatrimonio(request);
-    return result
+    reply.send(result)
   })
 
-  app.put('/patrimonio/:id', async (request, reply) => {
+  // Atualizar N campos de um patrimônio
+  app.patch('/patrimonio/:id', async (request, reply) => {
     const result: RespostaApi = await patController.AtualizarPatrimonio(request);
-    return result
+    reply.send(result)
   })
 
+  // Deletar Patrimônio
   app.delete('/patrimonio/:id', async (request, reply) => {
     const result: RespostaApi = await patController.DeletarPatrimonio(request);
-    return result
+    reply.send(result)
   })
 }

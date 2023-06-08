@@ -1,8 +1,6 @@
 import { IPatrimonioService } from "../interfaces/services/IPatrimonioService";
 import { PatrimonioService } from "../service/PatrimonioService";
-import { Patrimonio } from "../model/patrimonio";
 import { FastifyRequest } from "fastify/types/request";
-import { z } from 'zod';
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
@@ -21,14 +19,12 @@ export class patrimonioController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarNovoPatrimonio(request)
+            const filtro = super.resgatarPatrimonioParam(request)
             
-            result = await this.patService.createPatrimonio(filtro)
-            console.log(result)
+            result = await this.patService.getPatrimonio(filtro)
     
             return result;
         } catch(error) {
-            console.log(error)
             result.sucesso = false
             return result
         }
@@ -36,11 +32,10 @@ export class patrimonioController extends BaseController{
 
     public async ListagemPatrimonios(request: FastifyRequest): Promise<RespostaApi>{
         try{
-            const filtro = super.resgatarFiltroPat(request)
+            const filtro = super.resgatarPatrimonioQuery(request)
             const result = await this.patService.getPatrimonios(filtro)
             return result;
         } catch(error) {
-            console.log("erro: ", error)
             return {
                 sucesso: false,
                 error: "Erro ao obter a lista de patrimônios",
@@ -54,46 +49,46 @@ export class patrimonioController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarNovoPatrimonio(request)
+            const filtro = super.resgatarPatrimonioBody(request)
             
             result = await this.patService.createPatrimonio(filtro)
-            console.log(result)
     
             return result;
         } catch(error) {
-            console.log(error)
             result.sucesso = false
             return result
         }
     }
+    
     public async AtualizarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarNovoPatrimonio(request)
+            const filtroid = super.resgatarPatrimonioParam(request)
+
+            const filtroPat = super.resgatarPatrimonioBody(request)
             
-            result = await this.patService.createPatrimonio(filtro)
-            console.log(result)
+            const filtro = {...filtroid, ...filtroPat}
+
+            result = await this.patService.updatePatrimonio(filtro)
     
             return result;
         } catch(error) {
-            console.log(error)
             result.sucesso = false
             return result
         }
     }
+
     public async DeletarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarNovoPatrimonio(request)
+            const filtro = super.resgatarPatrimonioParam(request)
             
-            result = await this.patService.createPatrimonio(filtro)
-            console.log(result)
+            result = await this.patService.deletePatrimonio(filtro)
     
             return result;
         } catch(error) {
-            console.log(error)
             result.sucesso = false
             return result
         }

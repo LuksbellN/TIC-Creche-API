@@ -15,7 +15,6 @@ export class UsuarioService implements IUsuarioService {
 
     async login(email: string, senha: string): Promise<RespostaApi> {
         const resp: RespostaApi = new RespostaApi();
-        console.log('ole')
         try {
             const usuario: RespostaApi = await this.userRepository.getUsuarioByEmail(email);
 
@@ -61,7 +60,6 @@ export class UsuarioService implements IUsuarioService {
                 return resp;
             } catch (error) {
                 resp.error = error;
-                console.log(resp);
                 return resp;
             }
 

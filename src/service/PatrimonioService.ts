@@ -13,21 +13,25 @@ export class PatrimonioService implements IPatrimonioService{
     constructor() {
         this.patRepository = new PatrimonioRepository();
     }
-    async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
+
+    public async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
         const result: RespostaApi = await this.patRepository.createPatrimonio(filtroPat)
         return result;
     }
 
-    public getPatrimonio(id: number): Patrimonio {
+    public async getPatrimonio(filtro: {id: number}): Promise<RespostaApi> {
+        return await this.patRepository.getPatrimonio(filtro);
+    }
+    public async deletePatrimonio(filtro: {id: number}): Promise<RespostaApi> {
+        return await this.patRepository.deletePatrimonio(filtro);
+    }
 
-        //Qualquer lógica ou validação necessária deve ser implementada nessa camada de serviços
-
-        return this.patRepository.getPatrimonio(id);
+    public async updatePatrimonio(filtroPat: any): Promise<RespostaApi> {
+        return await this.patRepository.updatePatrimonio(filtroPat);
     }
 
     public async getPatrimonios(filtroPat: any): Promise<RespostaApi> {
 
-        //Qualquer lógica ou validação necessária deve ser implementada nessa camada de serviços
         const tipoPref = filtroPat.tipo.includes('pref')
         const tipoDoa = filtroPat.tipo.includes('doa')
         const tipoAdq = filtroPat.tipo.includes('adq')
@@ -48,20 +52,35 @@ export class PatrimonioService implements IPatrimonioService{
                     };
     
                     if(!tipoAdq && !tipoPref && !tipoDoa) {
-                        pat.valor = patrimonio.PatrimoniosPref?.length > 0 ? patrimonio.PatrimoniosPref[0].valor : (patrimonio.PatrimoniosAdquirido?.length > 0 ? patrimonio.PatrimoniosAdquirido[0].valor : '-' ) 
-                        pat.nomeDoador = patrimonio.PatrimoniosDoacao?.length > 0 ? patrimonio.PatrimoniosDoacao[0].nome_doador : '-'
-                        pat.telefone = patrimonio.PatrimoniosDoacao?.length > 0 ? patrimonio.PatrimoniosDoacao[0].telefone : '-'
-                        pat.placa = patrimonio.PatrimoniosPref?.length > 0 ? patrimonio.PatrimoniosPref[0].placa : '-'
+                        pat.valor = patrimonio.PatrimoniosPref?.length > 0 ? 
+                                        patrimonio.PatrimoniosPref[0].valor : 
+                                        (patrimonio.PatrimoniosAdquirido?.length > 0 ? 
+                                            patrimonio.PatrimoniosAdquirido[0].valor : '-' );
+
+                        pat.nomeDoador = patrimonio.PatrimoniosDoacao?.length > 0 ? ~
+                                            patrimonio.PatrimoniosDoacao[0].nome_doador : '-';
+
+                        pat.telefone = patrimonio.PatrimoniosDoacao?.length > 0 ? 
+                                        patrimonio.PatrimoniosDoacao[0].telefone : '-';
+
+                        pat.placa = patrimonio.PatrimoniosPref?.length > 0 ? 
+                                        patrimonio.PatrimoniosPref[0].placa : '-';
                     } else {
                         if(tipoAdq || tipoPref) {
-                            pat.valor = patrimonio.PatrimoniosPref?.length > 0 ? patrimonio.PatrimoniosPref[0].valor : (patrimonio.PatrimoniosAdquirido?.length > 0 ? patrimonio.PatrimoniosAdquirido[0].valor : '-' ) 
+                            pat.valor = patrimonio.PatrimoniosPref?.length > 0 ? 
+                                patrimonio.PatrimoniosPref[0].valor : 
+                                (patrimonio.PatrimoniosAdquirido?.length > 0 ? 
+                                    patrimonio.PatrimoniosAdquirido[0].valor : '-' ); 
                         }
                         if(tipoDoa) {
-                            pat.nomeDoador = patrimonio.PatrimoniosDoacao?.length > 0 ? patrimonio.PatrimoniosDoacao[0].nome_doador : '-'
-                            pat.telefone = patrimonio.PatrimoniosDoacao?.length > 0 ? patrimonio.PatrimoniosDoacao[0].telefone : '-'
+                            pat.nomeDoador = patrimonio.PatrimoniosDoacao?.length > 0 ? 
+                                                patrimonio.PatrimoniosDoacao[0].nome_doador : '-';
+                            pat.telefone = patrimonio.PatrimoniosDoacao?.length > 0 ? 
+                                                patrimonio.PatrimoniosDoacao[0].telefone : '-';
                         }
                         if(tipoPref) {
-                            pat.placa = patrimonio.PatrimoniosPref?.length > 0 ? patrimonio.PatrimoniosPref[0].placa : '-'
+                            pat.placa = patrimonio.PatrimoniosPref?.length > 0 ? 
+                                                patrimonio.PatrimoniosPref[0].placa : '-';
                         }
                     }
                     return pat;
@@ -69,7 +88,6 @@ export class PatrimonioService implements IPatrimonioService{
               result.sucesso = true;
               return result
         } catch(error) {
-            console.log(error)
             result.sucesso = false;
             result.error = error;
             return result;

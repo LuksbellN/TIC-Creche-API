@@ -1,8 +1,9 @@
-import { Patrimonio } from "../../model/patrimonio";
 import RespostaApi from "../../model/respostaApi";
 
 export interface IPatrimonioRepository{
-    getPatrimonio(id: number): Patrimonio;
+    getPatrimonio(filtro: {id: number}): Promise<RespostaApi>;
     getPatrimonios(filtro: any): Promise<RespostaApi>;
-    createPatrimonio(filtroPat: any): Promise<RespostaApi>
+    createPatrimonio(filtroPat: any): Promise<RespostaApi>;
+    updatePatrimonio(filtroPat: any): Promise<RespostaApi>;
+    deletePatrimonio(filtro: {id: number}): Promise<RespostaApi>;
 }

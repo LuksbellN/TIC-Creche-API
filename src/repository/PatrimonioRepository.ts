@@ -16,7 +16,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       let patrimonio = await prisma.patrimonio.create({
         data: {
           nome: filtroPat.nome,
-          dataAquisicao: filtroPat.dataAquisicao,
+          data_aquisicao: filtroPat.data_aquisicao,
           estado: filtroPat.estado,
           id_departamento: filtroPat.id_departamento,
           id_categoria: filtroPat.id_categoria,
@@ -26,28 +26,20 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       })
 
       filtroPat.id = patrimonio.id;
-      let res = {}
+      let res = new RespostaApi;
 
       if (filtroPat.tipo === "pref") {
         res = await this.addPatPrefeitura(filtroPat)
       } else if (filtroPat.tipo === "adq") {
         res = await this.addPatAdquirido(filtroPat)
-      } else if (filtroPat.tipo === "dpa") {
+      } else if (filtroPat.tipo === "doa") {
         res = await this.addPatDoacao(filtroPat)
       }
 
 
       resp.data = {
-        id: patrimonio.id,
-        tipo: filtroPat.tipo,
-        nome: patrimonio.nome,
-        dataAquisicao: patrimonio.dataAquisicao,
-        imagem_url: patrimonio.imagem_url,
-        id_departamento: patrimonio.id_departamento,
-        id_categoria: patrimonio.id_categoria,
-        id_fornecedor: patrimonio.id_fornecedor,
-        estado: patrimonio.estado,
-        ...res
+        ...patrimonio,
+        patTipo: {...res}
       };
       resp.sucesso = true;
       return resp;
@@ -70,15 +62,15 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     const ordem = filtro.ordenacao[1];
 
     try {
-
+      // TODO prisma com erro ao filtrar por periodo - comparar datas
       const result = await prisma.patrimonio.findMany({
         where: {
           id_categoria: filtro.categoria,
           id_departamento: filtro.departamento,
-          dataAquisicao: {
-            gte: filtro.data_inicio ? new Date(filtro.data_inicio) : undefined,
-            lte: filtro.data_fim ? new Date(filtro.data_fim) : undefined
-          },
+          // data_aquisicao: {
+          //   gte: filtro.data_inicio ? filtro.data_inicio : undefined,
+          //   lte: filtro.data_fim ? new filtro.data_fim : undefined
+          // },
           OR: [
             ...(tipoPref ? [
               {
@@ -175,7 +167,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
         },
         data: {
           nome: filtroPat.nome,
-          dataAquisicao: filtroPat.dataAquisicao,
+          data_aquisicao: filtroPat.data_aquisicao,
           estado: filtroPat.estado,
           id_departamento: filtroPat.id_departamento,
           id_categoria: filtroPat.id_categoria,
@@ -207,7 +199,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       resp.data = {
         tipo: filtroPat.tipo,
         nome: patrimonio.nome,
-        dataAquisicao: patrimonio.dataAquisicao,
+        data_aquisicao: patrimonio.data_aquisicao,
         imagem_url: patrimonio.imagem_url,
         id_departamento: patrimonio.id_departamento,
         id_categoria: patrimonio.id_categoria,
@@ -337,7 +329,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
 
     try {
 
-      let patrimonioDoa = await prisma.pat_doacao.create({
+      const patrimonioDoa = await prisma.pat_doacao.create({
         data: {
           id_patrimonio: filtroPat.id,
           nome_doador: filtroPat.nome_doador,
@@ -353,7 +345,6 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       resp.sucesso = true;
       return resp;
     } catch (error) {
-      resp.data = null;
       resp.sucesso = false;
       resp.error = error;
       return resp;

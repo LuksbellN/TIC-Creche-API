@@ -10,7 +10,7 @@ export class Patrimonio{
     private categoria: Categoria;
     private estado: number;
     private fornecedor: Fornecedor;
-    private dataAquisicao: Date;
+    private data_aquisicao: Date;
     private imagem_url: string | null;
     //#endregion
 
@@ -18,7 +18,7 @@ export class Patrimonio{
     constructor(id: number, nome: string,
         departamento: Departamento, categoria: Categoria,
         estado: number, fornecedor: Fornecedor,
-        dataAquisicao: Date, imagem_url: string | null) {
+        data_aquisicao: Date, imagem_url: string | null) {
         
             this.id = id;
             this.nome = nome;
@@ -26,7 +26,7 @@ export class Patrimonio{
             this.categoria = categoria;
             this.estado = estado;
             this.fornecedor = fornecedor;
-            this.dataAquisicao = dataAquisicao;
+            this.data_aquisicao = data_aquisicao;
             this.imagem_url = imagem_url; 
     }
 
@@ -38,7 +38,7 @@ export class Patrimonio{
     getCategoria(): Categoria{ return this.categoria };
     getEstado(): number{ return this.estado };
     getFornecedor(): Fornecedor{ return this.fornecedor };
-    getDataAquisicao(): Date{ return this.dataAquisicao };
+    getdata_aquisicao(): Date{ return this.data_aquisicao };
     getImagemUrl(): string | null{ return this.imagem_url };
     //#endregion
 
@@ -63,8 +63,8 @@ export class Patrimonio{
         // Valdiar fornecedor // if() return "Fornecedor inválido"
         this.fornecedor = fornecedor;
     }
-    setDataAquisicao(data: Date): void{
-        this.dataAquisicao = data;
+    setData_aquisicao(data: Date): void{
+        this.data_aquisicao = data;
     }
 
     setImagemUrl(imgUrl: string): void | string{
@@ -86,7 +86,7 @@ export class Patrimonio{
         return ` O nome do patrimonio é: ${this.nome} 
             \n O departamento do patrimônio é: ${this.departamento.toString()}
             \n O fornecedor do patrimonio é: ${this.fornecedor.toString()} 
-            \n Data de aquisição: ${this.dataAquisicao.toDateString}`
+            \n Data de aquisição: ${this.data_aquisicao.toDateString}`
     }
     //#endregion
 }

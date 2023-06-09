@@ -41,15 +41,17 @@ export class PatrimonioService implements IPatrimonioService {
         const tipoDoa = filtroPat.tipo.includes('doa')
         const tipoAdq = filtroPat.tipo.includes('adq')
 
-        if (filtroPat.ocorrencias != null) {
-            const patPropriedades = this.getPatPropriedades();
+        const patPropriedades = this.getPatPropriedades();
 
-            // Verifica se há ou se é válido a ordenação recebida 
-            if (!patPropriedades.includes(filtroPat.ordenacao[0]) ||
-                !(filtroPat.ordenacao[1] == "asc" || filtroPat.ordenacao[1] == "desc")) {
-                //Caso não, aplica a ordenação padrão por data de aquisição descendente
-                filtroPat.ordenacao = ["dataaquisicao", "desc"];
-            }
+        const propriedadeOrdenacao = filtroPat.ordenacao[0];
+        const direcaoOrdenacao = filtroPat.ordenacao[1];
+        console.log(patPropriedades)
+        const ordenacaoValida =
+            patPropriedades.includes(propriedadeOrdenacao) &&
+            (direcaoOrdenacao === "asc" || direcaoOrdenacao === "desc");
+        if (!ordenacaoValida) {
+            // Caso a ordenação não seja válida, aplica a ordenação padrão por data de aquisição descendente
+            filtroPat.ordenacao = ["data_aquisicao", "desc"];
         }
 
         const result = await this.patRepository.getPatrimonios(filtroPat);
@@ -63,7 +65,7 @@ export class PatrimonioService implements IPatrimonioService {
                         new Categoria(patrimonio.categoria.id, patrimonio.categoria.nome_categoria),
                         patrimonio.estado,
                         new Fornecedor(patrimonio.fornecedor.id, patrimonio.fornecedor.nome_fornecedor, patrimonio.fornecedor.documento),
-                        patrimonio.dataAquisicao,
+                        patrimonio.data_aquisicao,
                         patrimonio.imagem_url
                     )
                 };
@@ -111,12 +113,15 @@ export class PatrimonioService implements IPatrimonioService {
         }
 
     }
-    private getPatPropriedades(): any {
-        let patPropriedades = Object.getOwnPropertyNames(Patrimonio.prototype).map(el => el.toLowerCase());
-        patPropriedades.push(...Object.getOwnPropertyNames(PatAdquirido.prototype).map(el => el.toLowerCase()));
-        patPropriedades.push(...Object.getOwnPropertyNames(PatDoacao.prototype).map(el => el.toLowerCase()));
-        patPropriedades.push(...Object.getOwnPropertyNames(PatPrefeitura.prototype).map(el => el.toLowerCase()));
 
+    // TODO melhorar - reflection 
+    private getPatPropriedades(): string[] {
+        const propriedadesPatrimonio: string[] = ['id', 'nome', 'departamento', 'categoria', 'estado', 'fornecedor', 'data_aquisicao', 'imagem_url'];
+        const propriedadesPatAdquirido: string[] = ['id_pat_adquirido', 'valor'];
+        const propriedadesPatDoacao: string[] = ['id_pat_doacao', 'nome_doador', 'telefone'];
+        const propriedadesPatPrefeitura: string[] = ['id_pat_prefeitura', 'valor', 'placa'];
+
+        return [...propriedadesPatrimonio, ...propriedadesPatAdquirido, ...propriedadesPatDoacao, ...propriedadesPatPrefeitura];
     }
 
 }

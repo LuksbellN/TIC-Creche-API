@@ -62,6 +62,8 @@ export default class BaseController {
     // &ordenacao=nome-asc ou &ordenacao=estado-desc ou ....
     if (ordenacao) {
       filtro.ordenacao = ordenacao.split('-');
+    } else {
+      filtro.ordenacao = [];
     }
 
     if (consulta) {
@@ -116,12 +118,12 @@ export default class BaseController {
       id_fornecedor: z.union([z.string(), z.undefined()]),
       id_categoria: z.union([z.string(), z.undefined()]),
       id_departamento: z.union([z.string(), z.undefined()]),
-      dataAquisicao: z.union([z.string(), z.undefined()]),
+      data_aquisicao: z.union([z.string(), z.undefined()]),
       estado: z.union([z.string(), z.undefined()]),
       imagem_url: z.union([z.string(), z.undefined()]),
       valor: z.union([z.string(), z.undefined()]),
       placa: z.union([z.string(), z.undefined()]),
-      nomeDoador: z.union([z.string(), z.undefined()]),
+      nome_doador: z.union([z.string(), z.undefined()]),
       telefone: z.union([z.string(), z.undefined()]),
       id_pat_prefeitura: z.union([z.string(), z.undefined()]),
       id_pat_adquirido: z.union([z.string(), z.undefined()]),
@@ -153,8 +155,8 @@ export default class BaseController {
       filtro.id_departamento = Number(filtroPat.id_departamento);
     }
 
-    if (filtroPat.dataAquisicao) {
-      filtro.dataAquisicao = new Date(Date.parse(filtroPat.dataAquisicao));
+    if (filtroPat.data_aquisicao) {
+      filtro.data_aquisicao = new Date(Date.parse(filtroPat.data_aquisicao));
     }
     if (filtroPat.estado) {
       filtro.estado = Number(filtroPat.estado);
@@ -168,8 +170,8 @@ export default class BaseController {
     if (filtroPat.placa) {
       filtro.placa = filtroPat.placa;
     }
-    if (filtroPat.nomeDoador) {
-      filtro.nomeDoador = filtroPat.nomeDoador;
+    if (filtroPat.nome_doador) {
+      filtro.nome_doador = filtroPat.nome_doador;
     }
     if (filtroPat.telefone) {
       filtro.telefone = filtroPat.telefone;
@@ -192,93 +194,16 @@ export default class BaseController {
   // Resgata payload de Categoria do body
   protected resgatarCategoriaBody(request: FastifyRequest): any {
     const patSchema = z.object({
-      tipo: z.union([z.string(), z.undefined()]),
-      nome: z.union([z.string(), z.undefined()]),
-      id_fornecedor: z.union([z.string(), z.undefined()]),
-      id_categoria: z.union([z.string(), z.undefined()]),
-      id_departamento: z.union([z.string(), z.undefined()]),
-      dataAquisicao: z.union([z.string(), z.undefined()]),
-      estado: z.union([z.string(), z.undefined()]),
-      imagem_url: z.union([z.string(), z.undefined()]),
-      valor: z.union([z.string(), z.undefined()]),
-      placa: z.union([z.string(), z.undefined()]),
-      nomeDoador: z.union([z.string(), z.undefined()]),
-      telefone: z.union([z.string(), z.undefined()]),
-      id_pat_prefeitura: z.union([z.string(), z.undefined()]),
-      id_pat_adquirido: z.union([z.string(), z.undefined()]),
-      id_pat_doacao: z.union([z.string(), z.undefined()])
+      nome_categoria: z.union([z.string(), z.undefined()])
     });
 
 
-    const {
-      tipo,
-      nome,
-      id_fornecedor,
-      id_categoria,
-      id_departamento,
-      dataAquisicao,
-      estado,
-      imagem_url,
-      valor,
-      placa,
-      nomeDoador,
-      telefone,
-      id_pat_prefeitura,
-      id_pat_adquirido,
-      id_pat_doacao } = patSchema.parse(request.body)
+    const { nome_categoria } = patSchema.parse(request.body)
 
     let filtro: any = {};
 
-    if (tipo) {
-      filtro.tipo = tipo
-    }
-
-    if (nome) {
-      filtro.nome = nome
-    }
-
-    if (id_categoria) {
-      filtro.id_categoria = Number(id_categoria);
-    }
-
-    if (id_fornecedor) {
-      filtro.id_fornecedor = Number(id_fornecedor);
-    }
-
-    if (id_departamento) {
-      filtro.id_departamento = Number(id_departamento);
-    }
-
-    if (dataAquisicao) {
-      filtro.dataAquisicao = new Date(Date.parse(dataAquisicao));
-    }
-    if (estado) {
-      filtro.estado = Number(estado);
-    }
-    if (imagem_url) {
-      filtro.imagem_url = imagem_url;
-    }
-    if (valor) {
-      filtro.valor = Number(valor);
-    }
-    if (placa) {
-      filtro.placa = placa;
-    }
-    if (nomeDoador) {
-      filtro.nomeDoador = nomeDoador;
-    }
-    if (telefone) {
-      filtro.telefone = telefone;
-    }
-
-    if (id_pat_prefeitura) {
-      filtro.id_pat_prefeitura = Number(id_pat_prefeitura);
-    }
-    if (id_pat_adquirido) {
-      filtro.id_pat_adquirido = Number(id_pat_adquirido);
-    }
-    if (id_pat_doacao) {
-      filtro.id_pat_doacao = Number(id_pat_doacao);
+    if (nome_categoria) {
+      filtro.nome_categoria = nome_categoria
     }
 
     return filtro;

@@ -9,6 +9,7 @@ import { patrimonioRoutes } from './routes/patrimonios';
 import { usersRoutes } from './routes/users';
 import { loginRoutes } from './routes/login';
 import { uploadRoutes } from './routes/upload';
+import { categoriaRoutes } from './routes/categoria'
 
 
 const app = fastify()
@@ -32,6 +33,7 @@ app.register(usersRoutes);
 app.register(patrimonioRoutes);
 app.register(loginRoutes);
 app.register(uploadRoutes);
+app.register(categoriaRoutes)
 
 app
   .listen({port: 3333})

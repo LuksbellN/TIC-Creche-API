@@ -1,5 +1,7 @@
-import { Categoria } from "../../model/categoria";
+import RespostaApi from "../../model/respostaApi";
 
 export interface ICategoriaRepository{
-    getCategoria(id: number): Categoria;
+    getCategoria(filtro: {id: number}): Promise<RespostaApi>;
+    createCategoria(filtro: any): Promise<RespostaApi>;
+    getCategorias(filtro: any): Promise<RespostaApi>;
 }

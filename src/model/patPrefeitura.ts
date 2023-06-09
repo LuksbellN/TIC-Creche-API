@@ -13,11 +13,11 @@ export class PatPrefeitura extends Patrimonio{
     constructor(id_patrimonio: number, nome: string,
         departamento: Departamento, categoria: Categoria,
         estado: number, fornecedor: Fornecedor,
-        dataAquisicao: Date, valor: number, 
+        data_aquisicao: Date, valor: number, 
         placa: string, imagem_url: string | null){
             super(id_patrimonio, nome, departamento, 
                 categoria, estado, fornecedor, 
-                dataAquisicao, imagem_url);
+                data_aquisicao, imagem_url);
             this.valor = valor;
             this.placa = placa;
         } 

@@ -1,9 +1,9 @@
-import { FastifyInstance, FastifyRequest } from 'fastify'
+import { FastifyInstance } from 'fastify'
 import { CategoriaController } from '../controller/categoriaController';
 import RespostaApi from '../model/respostaApi';
 
 
-export async function patrimonioRoutes(app: FastifyInstance) {
+export async function categoriaRoutes(app: FastifyInstance) {
   const catController = new CategoriaController()
   
   app.addHook('preHandler', async (request) => {

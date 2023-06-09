@@ -12,11 +12,11 @@ export class PatDoacao extends Patrimonio{
     constructor(id_patrimonio: number, nome: string,
         departamento: Departamento, categoria: Categoria,
         estado: number, fornecedor: Fornecedor,
-        dataAquisicao: Date, nomeDoador: string, 
+        data_aquisicao: Date, nomeDoador: string, 
         imagem_url: string | null){
             super(id_patrimonio, nome, departamento, 
                 categoria, estado, fornecedor, 
-                dataAquisicao, imagem_url);
+                data_aquisicao, imagem_url);
             this.nomeDoador = nomeDoador;
         } 
     //#endregion

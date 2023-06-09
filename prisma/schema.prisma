@@ -27,11 +27,11 @@ model Departamento {
 }
 
 model Patrimonio {
-  id            Int      @id @default(autoincrement())
-  nome          String
-  dataAquisicao DateTime @default(now())
-  imagem_url    String?
-  estado        Int      @default(5)
+  id             Int      @id @default(autoincrement())
+  nome           String
+  data_aquisicao DateTime @default(now())
+  imagem_url     String?
+  estado         Int      @default(5)
 
   departamento    Departamento @relation(fields: [id_departamento], references: [id])
   id_departamento Int
@@ -56,9 +56,9 @@ model Categoria {
 }
 
 model Fornecedor {
-  id             Int     @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   nome_fornecedor String
-  documento      String?
+  documento       String?
 
   Patrimonios Patrimonio[]
 }
@@ -69,7 +69,7 @@ model Pat_prefeitura {
   placa             String
 
   patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
-  id_patrimonio Int @unique
+  id_patrimonio Int        @unique
 }
 
 model Pat_doacao {
@@ -78,7 +78,7 @@ model Pat_doacao {
   telefone      String
 
   patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
-  id_patrimonio Int @unique
+  id_patrimonio Int        @unique
 }
 
 model Pat_adquirido {
@@ -86,7 +86,7 @@ model Pat_adquirido {
   valor            Float
 
   patrimonio    Patrimonio @relation(fields: [id_patrimonio], references: [id])
-  id_patrimonio Int @unique
+  id_patrimonio Int        @unique
 }
 
 model TiposOcorrencia {

@@ -140,9 +140,14 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       const result = await prisma.patrimonio.findUniqueOrThrow({
         where: {
           id: filtro.id
+        },
+        include: {
+          PatrimoniosAdquirido: true,
+          PatrimoniosDoacao: true,
+          PatrimoniosPref: true,
+          Patrimonio_ocorrencias: true
         }
       })
-
 
       resp.data = result;
       resp.sucesso = true;
@@ -212,11 +217,44 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     let resp = new RespostaApi();
 
     try {
+      // Resgata os dados do patrimonio 
+      const pat = await this.getPatrimonio(filtro);
+
+      // Deleta as ocorrencias vinculadas a esse patrimonio
+      await prisma.patrimonio_ocorrencia.deleteMany({
+        where: {
+          id_patrimonio: filtro.id
+        }
+      })
+
+      // Deleta o patrimonio do tipo especificado
+      if(pat.data.PatrimoniosPref?.length > 0) {
+        await prisma.pat_prefeitura.delete({
+          where: {
+            id_patrimonio: pat.data.id
+          }
+        })
+      } else if(pat.data.PatrimoniosAdquirido?.length > 0) {
+        await prisma.pat_adquirido.delete({
+          where: {
+            id_patrimonio: pat.data.id
+          }
+        })
+      } else {
+        await prisma.pat_doacao.delete({
+          where: {
+            id_patrimonio: pat.data.id
+          }
+        })
+      }
+
+      // Deleta o patrimonio
       const result = await prisma.patrimonio.delete({
         where: {
           id: filtro.id
         }
       })
+
 
       resp.data = result;
       resp.sucesso = true;

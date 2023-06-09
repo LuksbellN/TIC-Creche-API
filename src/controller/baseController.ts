@@ -13,7 +13,7 @@ export default class BaseController {
     }
   }
 
-  // Resgata o payload da query
+  // Resgata o payload de patrimonio da query
   protected resgatarPatrimonioQuery(request: FastifyRequest): any {
     const querySchema = z.object({
       tipo: z.union([z.string(), z.undefined()]),
@@ -69,14 +69,31 @@ export default class BaseController {
     }
 
     return filtro;
-    // return {
-    //     tipo: tipo ? tipo.split('-') : [],
-    //     categoria: categoria ? parseInt(categoria) : 0,
-    //     departamento: departamento ? parseInt(departamento) : 0,
-    //     data_inicio:  new Date(Date.parse(data_inicio)),
-    //     data_fim: new Date(Date.parse(data_fim))
-    // }
+  }
 
+  // Resgata payload de categoria da query
+  protected resgatarCategoriaQuery(request: FastifyRequest): any {
+    const querySchema = z.object({
+      ordenacao: z.union([z.string(), z.undefined()]),
+      consulta: z.union([z.string(), z.undefined()])
+    });
+
+    const { 
+      ordenacao,
+      consulta } = querySchema.parse(request.query)
+
+    let filtro: any = {};
+
+    // &ordenacao=nome-asc ou &ordenacao=estado-desc ou ....
+    if (ordenacao) {
+      filtro.ordenacao = ordenacao.split('-');
+    }
+
+    if (consulta) {
+      filtro.consulta = consulta;
+    }
+
+    return filtro;
   }
 
   // Resgata payload id dos params
@@ -91,8 +108,89 @@ export default class BaseController {
     }
   }
 
-  // Resgata o payload do body
+  // Resgata o payload de patrimonio do body
   protected resgatarPatrimonioBody(request: FastifyRequest): any {
+    const patSchema = z.object({
+      tipo: z.union([z.string(), z.undefined()]),
+      nome: z.union([z.string(), z.undefined()]),
+      id_fornecedor: z.union([z.string(), z.undefined()]),
+      id_categoria: z.union([z.string(), z.undefined()]),
+      id_departamento: z.union([z.string(), z.undefined()]),
+      dataAquisicao: z.union([z.string(), z.undefined()]),
+      estado: z.union([z.string(), z.undefined()]),
+      imagem_url: z.union([z.string(), z.undefined()]),
+      valor: z.union([z.string(), z.undefined()]),
+      placa: z.union([z.string(), z.undefined()]),
+      nomeDoador: z.union([z.string(), z.undefined()]),
+      telefone: z.union([z.string(), z.undefined()]),
+      id_pat_prefeitura: z.union([z.string(), z.undefined()]),
+      id_pat_adquirido: z.union([z.string(), z.undefined()]),
+      id_pat_doacao: z.union([z.string(), z.undefined()])
+    });
+
+
+    const filtroPat = patSchema.parse(request.body)
+
+    let filtro: any = {};
+
+    if (filtroPat.tipo) {
+      filtro.tipo = filtroPat.tipo
+    }
+
+    if (filtroPat.nome) {
+      filtro.nome = filtroPat.nome
+    }
+
+    if (filtroPat.id_categoria) {
+      filtro.id_categoria = Number(filtroPat.id_categoria);
+    }
+
+    if (filtroPat.id_fornecedor) {
+      filtro.id_fornecedor = Number(filtroPat.id_fornecedor);
+    }
+
+    if (filtroPat.id_departamento) {
+      filtro.id_departamento = Number(filtroPat.id_departamento);
+    }
+
+    if (filtroPat.dataAquisicao) {
+      filtro.dataAquisicao = new Date(Date.parse(filtroPat.dataAquisicao));
+    }
+    if (filtroPat.estado) {
+      filtro.estado = Number(filtroPat.estado);
+    }
+    if (filtroPat.imagem_url) {
+      filtro.imagem_url = filtroPat.imagem_url;
+    }
+    if (filtroPat.valor) {
+      filtro.valor = Number(filtroPat.valor);
+    }
+    if (filtroPat.placa) {
+      filtro.placa = filtroPat.placa;
+    }
+    if (filtroPat.nomeDoador) {
+      filtro.nomeDoador = filtroPat.nomeDoador;
+    }
+    if (filtroPat.telefone) {
+      filtro.telefone = filtroPat.telefone;
+    }
+
+    if (filtroPat.id_pat_prefeitura) {
+      filtro.id_pat_prefeitura = Number(filtroPat.id_pat_prefeitura);
+    }
+    if (filtroPat.id_pat_adquirido) {
+      filtro.id_pat_adquirido = Number(filtroPat.id_pat_adquirido);
+    }
+    if (filtroPat.id_pat_doacao) {
+      filtro.id_pat_doacao = Number(filtroPat.id_pat_doacao);
+    }
+
+    return filtro;
+
+  }
+
+  // Resgata payload de Categoria do body
+  protected resgatarCategoriaBody(request: FastifyRequest): any {
     const patSchema = z.object({
       tipo: z.union([z.string(), z.undefined()]),
       nome: z.union([z.string(), z.undefined()]),
@@ -184,11 +282,10 @@ export default class BaseController {
     }
 
     return filtro;
-
   }
 
   // Resgata arquivo upload
-  public async resgatarArquivoUpload(request: FastifyRequest){
+  protected async resgatarArquivoUpload(request: FastifyRequest){
     return await request.file({
       limits:{
           fileSize: 5_242_880, //5mb

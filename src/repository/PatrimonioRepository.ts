@@ -168,8 +168,8 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     let resp = new RespostaApi();
 
     try {
-      
-      let patrimonio = await prisma.patrimonio.update({
+       const pat = await this.getPatrimonio({id: filtroPat.id}); 
+       const patrimonio = await prisma.patrimonio.update({
         where: {
           id: filtroPat.id
         },
@@ -180,18 +180,27 @@ export class PatrimonioRepository implements IPatrimonioRepository {
           id_departamento: filtroPat.id_departamento,
           id_categoria: filtroPat.id_categoria,
           id_fornecedor: filtroPat.id_fornecedor,
-          imagem_url: filtroPat.imagem_url ?? '',
+          imagem_url: filtroPat.imagem_url ?? ''
         }
-      })
+      });
 
       let res = {}
 
       if (filtroPat.tipo === "pref") {
-        res = await this.updatePatPrefeitura(filtroPat)
+        const campos = {
+          valor: filtroPat.valor,
+          placa: filtroPat.placa
+        };
+        res = await this.updatePatPrefeitura(pat.data.PatrimoniosPref[0].id_pat_prefeitura, campos);
       } else if (filtroPat.tipo === "adq") {
-        res = await this.updatePatAdquirido(filtroPat)
-      } else if (filtroPat.tipo === "dpa") {
-        res = await this.updatePatDoacao(filtroPat)
+
+        res = await this.updatePatAdquirido(pat.data.PatrimoniosAdquirido[0].id_pat_adquirido, filtroPat.valor);
+      } else if (filtroPat.tipo === "doa") {
+        const campos = {
+          nome_doador: filtroPat.nome_doador,
+          telefon: filtroPat.telefone
+        };
+        res = await this.updatePatDoacao(pat.data.PatrimoniosDoacao[0].id_pat_doacao, campos);
       }
 
 
@@ -231,13 +240,13 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       })
 
       // Deleta o patrimonio do tipo especificado
-      if(pat.data.PatrimoniosPref?.length > 0) {
+      if (pat.data.PatrimoniosPref?.length > 0) {
         await prisma.pat_prefeitura.delete({
           where: {
             id_patrimonio: pat.data.id
           }
         })
-      } else if(pat.data.PatrimoniosAdquirido?.length > 0) {
+      } else if (pat.data.PatrimoniosAdquirido?.length > 0) {
         await prisma.pat_adquirido.delete({
           where: {
             id_patrimonio: pat.data.id
@@ -351,21 +360,17 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     }
   }
 
-  private async updatePatPrefeitura(filtroPat: any): Promise<RespostaApi>{
+  private async updatePatPrefeitura(idPatPrefeitura: number, campos: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
-
+  
     try {
-
       let patrimonioPref = await prisma.pat_prefeitura.update({
         where: {
-          id_pat_prefeitura: filtroPat.id_pat_prefeitura
+          id_pat_prefeitura: idPatPrefeitura
         },
-        data: {
-          valor: filtroPat.valor,
-          placa: filtroPat.placa
-        }
+        data: campos
       })
-
+  
       resp.data = {
         valor: patrimonioPref.valor,
         placa: patrimonioPref.placa
@@ -373,24 +378,24 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       resp.sucesso = true;
       return resp;
     } catch (error) {
+
       resp.data = null;
       resp.sucesso = false;
       resp.error = error;
       return resp;
     }
-    
-  } 
-  private async updatePatAdquirido(filtroPat: any): Promise<RespostaApi>{
+  }
+
+  private async updatePatAdquirido(idPatAdq: number, valor: number): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
-
       let patrimonioAdq = await prisma.pat_adquirido.update({
         where: {
-          id_pat_adquirido: filtroPat.id_pat_adquirido
+          id_pat_adquirido: idPatAdq
         },
         data: {
-          valor: filtroPat.valor
+          valor: valor
         }
       })
 
@@ -406,20 +411,17 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       return resp;
     }
 
-  } 
-  private async updatePatDoacao(filtroPat: any): Promise<RespostaApi>{
+  }
+  private async updatePatDoacao(idPatDoacao: number, campos: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
 
     try {
 
       let patrimonioDoa = await prisma.pat_doacao.update({
         where: {
-          id_pat_doacao: filtroPat.id_pat_doacao
+          id_pat_doacao: idPatDoacao
         },
-        data: {
-          nome_doador: filtroPat.nome_doador,
-          telefone: filtroPat.telefone
-        }
+        data: campos
       })
 
       resp.data = {
@@ -435,5 +437,5 @@ export class PatrimonioRepository implements IPatrimonioRepository {
       return resp;
     }
 
-  } 
+  }
 }

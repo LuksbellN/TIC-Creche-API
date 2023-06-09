@@ -34,7 +34,7 @@ export class CategoriaController extends BaseController{
     public async ListagemCategoria(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
-            const filtro = super.resgatarPatrimonioQuery(request)
+            const filtro = super.resgatarCategoriaQuery(request)
             result = await this.catService.getCategorias(filtro)
             return result;
         } catch(error) {
@@ -49,7 +49,7 @@ export class CategoriaController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarPatrimonioBody(request)
+            const filtro = super.resgatarCategoriaBody(request)
             
             result = await this.catService.createCategoria(filtro)
     

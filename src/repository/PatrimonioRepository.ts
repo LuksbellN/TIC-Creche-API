@@ -66,6 +66,8 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     const tipoDoa = filtro.tipo.includes('doa');
     const tipoAdq = filtro.tipo.includes('adq');
     const consulta = filtro.consulta;
+    const atributoOrdenacao = filtro.ordenacao[0];
+    const ordem = filtro.ordenacao[1];
 
     try {
 
@@ -119,9 +121,10 @@ export class PatrimonioRepository implements IPatrimonioRepository {
           } : {})
         },
         orderBy: {
-          dataAquisicao: 'desc'
+          [atributoOrdenacao]: ordem
         }
       });
+
       resp.data = result;
       resp.sucesso = true;
       return resp;

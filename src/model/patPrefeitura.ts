@@ -3,7 +3,7 @@ import { Departamento } from "./departamento";
 import { Fornecedor } from "./fornecedor";
 import { Patrimonio } from "./patrimonio";
 
-class PatPrefeitura extends Patrimonio{
+export class PatPrefeitura extends Patrimonio{
     //#region Propriedades
     private valor: number;
     private placa: string;
@@ -13,11 +13,11 @@ class PatPrefeitura extends Patrimonio{
     constructor(id_patrimonio: number, nome: string,
         departamento: Departamento, categoria: Categoria,
         estado: number, fornecedor: Fornecedor,
-        data_aquisicao: Date, valor: number, 
+        dataAquisicao: Date, valor: number, 
         placa: string, imagem_url: string | null){
             super(id_patrimonio, nome, departamento, 
                 categoria, estado, fornecedor, 
-                data_aquisicao, imagem_url);
+                dataAquisicao, imagem_url);
             this.valor = valor;
             this.placa = placa;
         } 

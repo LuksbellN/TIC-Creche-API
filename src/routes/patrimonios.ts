@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyRequest } from 'fastify'
-import { patrimonioController } from '../controller/patrimonioController';
+import { PatrimonioController } from '../controller/patrimonioController';
 import RespostaApi from '../model/respostaApi';
 
 
 export async function patrimonioRoutes(app: FastifyInstance) {
-  const patController = new patrimonioController()
+  const patController = new PatrimonioController()
   
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify();

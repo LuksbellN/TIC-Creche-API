@@ -1,12 +1,13 @@
 import { Categoria } from "../model/categoria";
 import { ICategoriaService } from "../interfaces/services/ICategoriaService";
 import { ICategoriaRepository } from "../interfaces/repositories/ICategoriaRepository";
+import { CategoriaRepository } from "../repository/CategoriaRepository";
 
 export class CategoriaService implements ICategoriaService{
     private catRepository: ICategoriaRepository;
 
-    constructor(catRepository: ICategoriaRepository) {
-        this.catRepository = catRepository;
+    constructor() {
+        this.catRepository = new CategoriaRepository();
     }
 
     public getCategoria(id: number): Categoria{

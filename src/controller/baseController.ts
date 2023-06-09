@@ -21,6 +21,7 @@ export default class BaseController {
       departamento: z.union([z.string(), z.undefined()]),
       data_inicio: z.union([z.string(), z.undefined()]),
       data_fim: z.union([z.string(), z.undefined()]),
+      ordenacao: z.union([z.string(), z.undefined()]),
       consulta: z.union([z.string(), z.undefined()])
     });
 
@@ -30,6 +31,7 @@ export default class BaseController {
       departamento, 
       data_inicio, 
       data_fim, 
+      ordenacao,
       consulta } = querySchema.parse(request.query)
 
     let filtro: any = {};
@@ -56,6 +58,12 @@ export default class BaseController {
       filtro.data_fim = new Date(Date.parse(data_fim));
     }
 
+
+    // &ordenacao=nome-asc ou &ordenacao=estado-desc ou ....
+    if (ordenacao) {
+      filtro.ordenacao = ordenacao.split('-');
+    }
+
     if (consulta) {
       filtro.consulta = consulta;
     }
@@ -72,7 +80,7 @@ export default class BaseController {
   }
 
   // Resgata payload id dos params
-  protected resgatarPatrimonioParam(request: FastifyRequest): {id: number}{
+  protected resgatarIdParam(request: FastifyRequest): {id: number}{
     const patSchema = z.object({
       id: z.string()
     })
@@ -177,5 +185,14 @@ export default class BaseController {
 
     return filtro;
 
+  }
+
+  // Resgata arquivo upload
+  public async resgatarArquivoUpload(request: FastifyRequest){
+    return await request.file({
+      limits:{
+          fileSize: 5_242_880, //5mb
+      }
+  })
   }
 }

@@ -4,7 +4,7 @@ import { FastifyRequest } from "fastify/types/request";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
-export class patrimonioController extends BaseController{
+export class PatrimonioController extends BaseController{
 
     private patService: IPatrimonioService;
     /**
@@ -19,28 +19,28 @@ export class patrimonioController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarPatrimonioParam(request)
+            const filtro = super.resgatarIdParam(request)
             
             result = await this.patService.getPatrimonio(filtro)
     
             return result;
         } catch(error) {
-            result.sucesso = false
+            result.sucesso = false;
+            result.error = error;
             return result
         }
     }
 
     public async ListagemPatrimonios(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
         try{
             const filtro = super.resgatarPatrimonioQuery(request)
-            const result = await this.patService.getPatrimonios(filtro)
+            result = await this.patService.getPatrimonios(filtro)
             return result;
         } catch(error) {
-            return {
-                sucesso: false,
-                error: "Erro ao obter a lista de patrimônios",
-                data: null
-              };
+            result.sucesso = false;
+            result.error = error;
+            return result;
         }
 
     }
@@ -55,8 +55,9 @@ export class patrimonioController extends BaseController{
     
             return result;
         } catch(error) {
-            result.sucesso = false
-            return result
+            result.sucesso = false;
+            result.error = error;
+            return result;
         }
     }
     
@@ -64,7 +65,7 @@ export class patrimonioController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtroid = super.resgatarPatrimonioParam(request)
+            const filtroid = super.resgatarIdParam(request)
 
             const filtroPat = super.resgatarPatrimonioBody(request)
             
@@ -74,8 +75,9 @@ export class patrimonioController extends BaseController{
     
             return result;
         } catch(error) {
-            result.sucesso = false
-            return result
+            result.sucesso = false;
+            result.error = error;
+            return result;
         }
     }
 
@@ -83,14 +85,15 @@ export class patrimonioController extends BaseController{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarPatrimonioParam(request)
+            const filtro = super.resgatarIdParam(request)
             
             result = await this.patService.deletePatrimonio(filtro)
     
             return result;
         } catch(error) {
-            result.sucesso = false
-            return result
+            result.sucesso = false;
+            result.error = error;
+            return result;
         }
     }
 

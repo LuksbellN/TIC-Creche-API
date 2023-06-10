@@ -72,4 +72,29 @@ export class CategoriaRepository implements ICategoriaRepository{
         }
     }
 
+    public async updateCategoria(filtro: any): Promise<RespostaApi> {
+        let resp = new RespostaApi;
+
+        try{
+            const result = await prisma.categoria.update({
+                where: {
+                    id: filtro.id
+                },
+                data: {
+                    nome_categoria: filtro.nome_categoria 
+                }
+              })
+        
+              resp.data = result;
+              resp.sucesso = true;
+              return resp;
+        } catch(error) {
+            resp.sucesso = false;
+            resp.error = error;
+            return resp
+        }
+    }
+
+
+
 }

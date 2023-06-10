@@ -3,16 +3,6 @@ import { z } from "zod";
 
 export default class BaseController {
 
-
-
-  protected listaDepartamentos(): { [key: number]: string } {
-    return {
-      1: "cozinha",
-      2: "escritorio",
-      3: "sala de aula"
-    }
-  }
-
   // Resgata o payload de patrimonio da query
   protected resgatarPatrimonioQuery(request: FastifyRequest): any {
     const querySchema = z.object({
@@ -73,8 +63,8 @@ export default class BaseController {
     return filtro;
   }
 
-  // Resgata payload de categoria da query
-  protected resgatarCategoriaQuery(request: FastifyRequest): any {
+  // Resgata payload da query padrao
+  protected resgatarQueryPadrao(request: FastifyRequest): any {
     const querySchema = z.object({
       ordenacao: z.union([z.string(), z.undefined()]),
       consulta: z.union([z.string(), z.undefined()])
@@ -193,17 +183,58 @@ export default class BaseController {
 
   // Resgata payload de Categoria do body
   protected resgatarCategoriaBody(request: FastifyRequest): any {
-    const patSchema = z.object({
+    const catSchema = z.object({
       nome_categoria: z.union([z.string(), z.undefined()])
     });
 
 
-    const { nome_categoria } = patSchema.parse(request.body)
+    const { nome_categoria } = catSchema.parse(request.body)
 
     let filtro: any = {};
 
     if (nome_categoria) {
       filtro.nome_categoria = nome_categoria
+    }
+
+    return filtro;
+  }
+
+  // Resgata payload de Categoria do body
+  protected resgatarDepartamentoBody(request: FastifyRequest): any {
+    const depSchema = z.object({
+      nome_departamento: z.union([z.string(), z.undefined()])
+    });
+
+
+    const { nome_departamento } = depSchema.parse(request.body)
+
+    let filtro: any = {};
+
+    if (nome_departamento) {
+      filtro.nome_departamento = nome_departamento
+    }
+
+    return filtro;
+  }
+
+  // Resgata payload de Fornecedor do body
+  protected resgatarFornecedorBody(request: FastifyRequest): any {
+    const patSchema = z.object({
+      nome_fornecedor: z.union([z.string(), z.undefined()]),
+      documento: z.union([z.string(), z.undefined()])
+    });
+
+
+    const { nome_fornecedor, documento } = patSchema.parse(request.body)
+
+    let filtro: any = {};
+
+    if (nome_fornecedor) {
+      filtro.nome_fornecedor = nome_fornecedor
+    }
+
+    if (documento) {
+      filtro.documento = documento
     }
 
     return filtro;

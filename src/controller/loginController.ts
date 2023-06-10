@@ -5,20 +5,26 @@ import { z } from "zod";
 import { Usuario } from "../model/usuario";
 import { Departamento } from "../model/departamento";
 import BaseController from "./baseController";
+import { IDepartamentoService } from "../interfaces/services/IDepartamentoService";
+import { DepartamentoService } from "../service/DepartamentoService";
+import RespostaApi from "../model/respostaApi";
 
 export class LoginController extends BaseController {
 
     private usuarioService: IUsuarioService
+    private departamentoService: IDepartamentoService
     private readonly app: FastifyInstance
 
     constructor(app: FastifyInstance) {
         super();
         this.app = app;
         this.usuarioService = new UsuarioService()
+        this.departamentoService = new DepartamentoService()
     }
 
-    public async Registrar(request: FastifyRequest) {
+    public async Registrar(request: FastifyRequest): Promise<RespostaApi> {
 
+        let result = new RespostaApi;
         try{
 
             const userSchema = z.object({
@@ -27,16 +33,19 @@ export class LoginController extends BaseController {
                 senha: z.string(),
                 id_departamento: z.string()
             })
-    
+            
+
             const userInfo = userSchema.parse(request.body)
-            const dpto = new Departamento(parseInt(userInfo.id_departamento), super.listaDepartamentos()[parseInt(userInfo.id_departamento)])
-            const result = await this.usuarioService.registrarUsuario(new Usuario(null, userInfo.userName, userInfo.email, userInfo.senha, dpto))
+            const { data } = await this.departamentoService.getDepartamento({id: parseInt(userInfo.id_departamento)})
+            const dpto = new Departamento(data.id_departamento, data.nome_departamento);
+            result.data = await this.usuarioService.registrarUsuario(new Usuario(null, userInfo.userName, userInfo.email, userInfo.senha, dpto))
     
     
             return result;
         } catch(error) {
-            console.log(error)
-            return error
+            result.sucesso = false;
+            result.error = error
+            return result;
         }
     }
 

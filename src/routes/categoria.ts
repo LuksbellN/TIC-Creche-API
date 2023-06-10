@@ -34,9 +34,5 @@ export async function categoriaRoutes(app: FastifyInstance) {
     reply.send(result)
   })
 
-  // Deletar categoria
-  app.delete('/categoria/:id', async (request, reply) => {
-    const result: RespostaApi = await catController.DeletarCategoria(request);
-    reply.send(result)
-  })
+
 }

@@ -1,8 +1,5 @@
 import { Patrimonio } from "../model/patrimonio";
 import RespostaApi from "../model/respostaApi";
-import { PatAdquirido } from "../model/patAdquirido";
-import { PatDoacao } from "../model/patDoacao";
-import { PatPrefeitura } from "../model/patPrefeitura";
 import { IPatrimonioService } from "../interfaces/services/IPatrimonioService";
 import { IPatrimonioRepository } from "../interfaces/repositories/IPatrimonioRepository";
 import { PatrimonioRepository } from "../repository/PatrimonioRepository";

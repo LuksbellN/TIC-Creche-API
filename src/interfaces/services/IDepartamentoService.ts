@@ -1,7 +1,9 @@
-import { Departamento } from "../../model/departamento";
+import RespostaApi from "../../model/respostaApi";
 
 export interface IDepartamentoService{
 
-    getDepartamento(id: number): Departamento;
-
+    getDepartamento(filtro: {id: number}): Promise<RespostaApi>;
+    getDepartamentos(filtro: any): Promise<RespostaApi>;
+    createDepartamento(filtro: any): Promise<RespostaApi>;
+    updateDepartamento(filtro: any): Promise<RespostaApi>;
 }

@@ -1,27 +1,27 @@
 import { FastifyRequest } from "fastify";
-import { ICategoriaService } from "../interfaces/services/ICategoriaService";
-import { CategoriaService } from "../service/CategoriaService";
+import { IDepartamentoService } from "../interfaces/services/IDepartamentoService";
+import { DepartamentoService } from "../service/DepartamentoService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
-export class CategoriaController extends BaseController{
+export class DepartamentoController extends BaseController{
 
-    private catService: ICategoriaService;
+    private catService: IDepartamentoService;
     /**
      *
      */
     constructor() {
         super();
-        this.catService = new CategoriaService(); 
+        this.catService = new DepartamentoService(); 
     }
 
-    public async ResgatarCategoria(request: FastifyRequest): Promise<RespostaApi>{
+    public async ResgatarDepartamento(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
             const filtro = super.resgatarIdParam(request)
             
-            result = await this.catService.getCategoria(filtro)
+            result = await this.catService.getDepartamento(filtro)
     
             return result;
         } catch(error) {
@@ -31,11 +31,11 @@ export class CategoriaController extends BaseController{
         }
     }
 
-    public async ListagemCategoria(request: FastifyRequest): Promise<RespostaApi>{
+    public async ListagemDepartamento(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
             const filtro = super.resgatarQueryPadrao(request)
-            result = await this.catService.getCategorias(filtro)
+            result = await this.catService.getDepartamentos(filtro)
             return result;
         } catch(error) {
             result.sucesso = false;
@@ -45,13 +45,13 @@ export class CategoriaController extends BaseController{
 
     }
 
-    public async CadastrarCategoria(request: FastifyRequest): Promise<RespostaApi>{
+    public async CadastrarDepartamento(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarCategoriaBody(request)
+            const filtro = super.resgatarDepartamentoBody(request)
             
-            result = await this.catService.createCategoria(filtro)
+            result = await this.catService.createDepartamento(filtro)
     
             return result;
         } catch(error) {
@@ -61,17 +61,17 @@ export class CategoriaController extends BaseController{
         }
     }
     
-    public async AtualizarCategoria(request: FastifyRequest): Promise<RespostaApi>{
+    public async AtualizarDepartamento(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
             const filtroid = super.resgatarIdParam(request)
 
-            const filtroCat = super.resgatarCategoriaBody(request)
+            const filtroCat = super.resgatarDepartamentoBody(request)
             
             const filtro = {...filtroid, ...filtroCat}
 
-            result = await this.catService.updateCategoria(filtro)
+            result = await this.catService.updateDepartamento(filtro)
     
             return result;
         } catch(error) {

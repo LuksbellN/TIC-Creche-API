@@ -1,41 +1,54 @@
-import { Categoria } from "../model/categoria";
 import { ICategoriaService } from "../interfaces/services/ICategoriaService";
 import { ICategoriaRepository } from "../interfaces/repositories/ICategoriaRepository";
 import { CategoriaRepository } from "../repository/CategoriaRepository";
 import RespostaApi from "../model/respostaApi";
 
-export class CategoriaService implements ICategoriaService{
+export class CategoriaService implements ICategoriaService {
     private catRepository: ICategoriaRepository;
 
     constructor() {
         this.catRepository = new CategoriaRepository();
     }
-    
-    public async getCategoria(filtro: {id: number}): Promise<RespostaApi>{
+
+    public async getCategoria(filtro: { id: number }): Promise<RespostaApi> {
 
         //Qualquer lógica ou validação necessária deve ser implementada nessa camada de serviços
 
         return await this.catRepository.getCategoria(filtro);
     }
 
-    public async getCategorias(filtro: any): Promise<RespostaApi>{
+    public async getCategorias(filtro: any): Promise<RespostaApi> {
 
-        if (!filtro.ordenacao) {
-            let catPropriedades = Object.getOwnPropertyNames(Categoria.prototype).map(el => el.toLowerCase());
+        const CatPropriedades = this.getCatPropriedades();
 
-            // Verifica se há ou se é válido a ordenação recebida 
-            if (!catPropriedades.includes(filtro.ordenacao[0]) ||
-                !(filtro.ordenacao[1] === "asc" || filtro.ordenacao[1] === "desc")) {
-                //Caso não, aplica a ordenação padrão por data de aquisição descendente
-                filtro.ordenacao = ["nome", "asc"];
-            }
+        const propriedadeOrdenacao = filtro.ordenacao[0];
+        const direcaoOrdenacao = filtro.ordenacao[1];
+        const ordenacaoValida =
+            CatPropriedades.includes(propriedadeOrdenacao) &&
+            (direcaoOrdenacao === "asc" || direcaoOrdenacao === "desc");
+        if (!ordenacaoValida) {
+            // Caso a ordenação não seja válida, aplica a ordenação padrão por data de aquisição descendente
+            filtro.ordenacao = ["nome_categoria", "asc"];
         }
 
         return await this.catRepository.getCategorias(filtro);
     }
 
-    public async createCategoria(filtro: any): Promise<RespostaApi>{
+    public async createCategoria(filtro: any): Promise<RespostaApi> {
 
         return await this.catRepository.createCategoria(filtro);
     }
+
+    public async updateCategoria(filtro: any): Promise<RespostaApi> {
+
+        return await this.catRepository.updateCategoria(filtro);
+    }
+
+    // TODO melhorar - reflection 
+    private getCatPropriedades(): string[] {
+        const propriedadesCategoria: string[] = ['id', 'nome_categoria'];
+
+        return [...propriedadesCategoria];
+    }
+
 }

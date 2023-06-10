@@ -132,7 +132,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     let resp = new RespostaApi();
 
     try {
-      const result = await prisma.patrimonio.findUniqueOrThrow({
+      const result = await prisma.patrimonio.findUnique({
         where: {
           id: filtro.id
         },

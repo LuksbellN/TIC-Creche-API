@@ -12,6 +12,7 @@ import { uploadRoutes } from './routes/upload';
 import { categoriaRoutes } from './routes/categoria'
 import { fornecedorRoutes } from './routes/fornecedor'
 import { departamentoRoutes } from './routes/departamento'
+import { tipoOcorrenciaRoutes } from './routes/tipoOcorrencia'
 
 
 const app = fastify()
@@ -38,6 +39,7 @@ app.register(uploadRoutes);
 app.register(categoriaRoutes)
 app.register(fornecedorRoutes)
 app.register(departamentoRoutes)
+app.register(tipoOcorrenciaRoutes)
 
 app
   .listen({port: 3333})

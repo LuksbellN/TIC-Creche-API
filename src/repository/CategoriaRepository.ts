@@ -9,7 +9,7 @@ export class CategoriaRepository implements ICategoriaRepository{
         let resp = new RespostaApi;
 
         try{
-            const result = await prisma.categoria.findUniqueOrThrow({
+            const result = await prisma.categoria.findUnique({
                 where: {
                   id: filtro.id
                 }

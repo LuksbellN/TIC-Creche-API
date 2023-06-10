@@ -1,15 +1,15 @@
-import { IFornecedorRepository } from "../interfaces/repositories/IFornecedorRepository";
+import { ITipoOcorrenciaRepository } from "../interfaces/repositories/ITipoOcorrenciaRepository";
 import { prisma } from "../lib/prisma";
 import RespostaApi from "../model/respostaApi";
 
-export class FornecedorRepository implements IFornecedorRepository {
+export class TipoOcorrenciaRepository implements ITipoOcorrenciaRepository {
 
     //TODO: Implementar conexão e acessar banco de dados
-    public async getFornecedor(filtro: { id: number }): Promise<RespostaApi> {
+    public async getTipoOcorrencia(filtro: { id: number }): Promise<RespostaApi> {
         let resp = new RespostaApi;
 
         try {
-            const result = await prisma.fornecedor.findUnique({
+            const result = await prisma.tiposOcorrencia.findUnique({
                 where: {
                     id: filtro.id
                 }
@@ -25,15 +25,15 @@ export class FornecedorRepository implements IFornecedorRepository {
         }
     }
 
-    public async getFornecedors(filtro: any): Promise<RespostaApi> {
+    public async getTipoOcorrencias(filtro: any): Promise<RespostaApi> {
         let resp = new RespostaApi;
         const atributoOrdenacao = filtro.ordenacao[0];
         const ordem = filtro.ordenacao[1];
 
         try {
-            const result = await prisma.fornecedor.findMany({
+            const result = await prisma.tiposOcorrencia.findMany({
                 where: {
-                    nome_fornecedor: filtro.consulta ? {
+                    nome: filtro.consulta ? {
                         contains: filtro.consulta
                     } : undefined
                 },
@@ -52,15 +52,13 @@ export class FornecedorRepository implements IFornecedorRepository {
         }
     }
 
-    public async createFornecedor(filtro: any): Promise<RespostaApi> {
+    public async createTipoOcorrencia(filtro: any): Promise<RespostaApi> {
         let resp = new RespostaApi;
 
         try {
-
-            const result = await prisma.fornecedor.create({
+            const result = await prisma.tiposOcorrencia.create({
                 data: {
-                    nome_fornecedor: filtro.nome_fornecedor,
-                    documento: filtro.documento
+                    nome: filtro.nome
                 }
             })
 
@@ -74,17 +72,16 @@ export class FornecedorRepository implements IFornecedorRepository {
         }
     }
 
-    public async updateFornecedor(filtro: any): Promise<RespostaApi> {
+    public async updateTipoOcorrencia(filtro: any): Promise<RespostaApi> {
         let resp = new RespostaApi;
 
         try {
-            const result = await prisma.fornecedor.update({
+            const result = await prisma.tiposOcorrencia.update({
                 where: {
                     id: filtro.id
                 },
                 data: {
-                    nome_fornecedor: filtro.nome_fornecedor,
-                    documento: filtro.documento
+                    nome: filtro.nome,
                 }
             })
 

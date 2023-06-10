@@ -9,7 +9,7 @@ export class DepartamentoRepository implements IDepartamentoRepository{
         let resp = new RespostaApi;
 
         try{
-            const result = await prisma.departamento.findUniqueOrThrow({
+            const result = await prisma.departamento.findUnique({
                 where: {
                   id: filtro.id
                 }

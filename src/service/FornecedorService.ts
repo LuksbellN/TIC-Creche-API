@@ -1,4 +1,3 @@
-import { Fornecedor } from "../model/fornecedor";
 import { IFornecedorService } from "../interfaces/services/IFornecedorService";
 import { IFornecedorRepository } from "../interfaces/repositories/IFornecedorRepository";
 import { FornecedorRepository } from "../repository/FornecedorRepository";

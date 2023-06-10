@@ -199,6 +199,24 @@ export default class BaseController {
     return filtro;
   }
 
+  // Resgata payload de Tipo Ocorrencia do body
+  protected resgatarTipoOcorrenciaBody(request: FastifyRequest): any {
+    const catSchema = z.object({
+      nome: z.union([z.string(), z.undefined()])
+    });
+
+
+    const { nome } = catSchema.parse(request.body)
+
+    let filtro: any = {};
+
+    if (nome) {
+      filtro.nome = nome
+    }
+
+    return filtro;
+  }
+
   // Resgata payload de Categoria do body
   protected resgatarDepartamentoBody(request: FastifyRequest): any {
     const depSchema = z.object({

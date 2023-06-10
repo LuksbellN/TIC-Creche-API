@@ -4,22 +4,22 @@ import { TipoOcorrenciaRepository } from "../repository/TipoOcorrenciaRepository
 import RespostaApi from "../model/respostaApi";
 
 export class TipoOcorrenciaService implements ITipoOcorrenciaService {
-    private catRepository: ITipoOcorrenciaRepository;
+    private tipoOcorrRepository: ITipoOcorrenciaRepository;
 
     constructor() {
-        this.catRepository = new TipoOcorrenciaRepository();
+        this.tipoOcorrRepository = new TipoOcorrenciaRepository();
     }
 
     public async getTipoOcorrencia(filtro: { id: number }): Promise<RespostaApi> {
 
         //Qualquer lógica ou validação necessária deve ser implementada nessa camada de serviços
 
-        return await this.catRepository.getTipoOcorrencia(filtro);
+        return await this.tipoOcorrRepository.getTipoOcorrencia(filtro);
     }
 
     public async getTipoOcorrencias(filtro: any): Promise<RespostaApi> {
 
-        const forPropriedades = this.getForPropriedades();
+        const forPropriedades = this.getTipoOcorrPropriedades();
 
         const propriedadeOrdenacao = filtro.ordenacao[0];
         const direcaoOrdenacao = filtro.ordenacao[1];
@@ -31,24 +31,24 @@ export class TipoOcorrenciaService implements ITipoOcorrenciaService {
             filtro.ordenacao = ["nome", "asc"];
         }
 
-        return await this.catRepository.getTipoOcorrencias(filtro);
+        return await this.tipoOcorrRepository.getTipoOcorrencias(filtro);
     }
 
     public async createTipoOcorrencia(filtro: any): Promise<RespostaApi> {
 
-        return await this.catRepository.createTipoOcorrencia(filtro);
+        return await this.tipoOcorrRepository.createTipoOcorrencia(filtro);
     }
 
     public async updateTipoOcorrencia(filtro: any): Promise<RespostaApi> {
 
-        return await this.catRepository.updateTipoOcorrencia(filtro);
+        return await this.tipoOcorrRepository.updateTipoOcorrencia(filtro);
     }
 
     // TODO melhorar - reflection 
-    private getForPropriedades(): string[] {
-        const propriedadesPatrimonio: string[] = ['id', 'nome', 'documento'];
+    private getTipoOcorrPropriedades(): string[] {
+        const propriedadesTipoOcorrencia: string[] = ['id', 'nome'];
 
-        return [...propriedadesPatrimonio];
+        return [...propriedadesTipoOcorrencia];
     }
 
 }

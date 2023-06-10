@@ -201,17 +201,40 @@ export default class BaseController {
 
   // Resgata payload de Tipo Ocorrencia do body
   protected resgatarTipoOcorrenciaBody(request: FastifyRequest): any {
-    const catSchema = z.object({
+    const tipoOcorrSchema = z.object({
       nome: z.union([z.string(), z.undefined()])
     });
 
 
-    const { nome } = catSchema.parse(request.body)
+    const { nome } = tipoOcorrSchema.parse(request.body)
 
     let filtro: any = {};
 
     if (nome) {
       filtro.nome = nome
+    }
+
+    return filtro;
+  }
+
+  // Resgata payload de Tipo Ocorrencia do body
+  protected resgatarOcorrenciaBody(request: FastifyRequest): any {
+    const ocorrSchema = z.object({
+      nome: z.union([z.string(), z.undefined()]),
+      id_tipo_ocorrencia: z.union([z.string(), z.undefined()])
+    });
+
+
+    const { nome, id_tipo_ocorrencia } = ocorrSchema.parse(request.body)
+
+    let filtro: any = {};
+
+    if (nome) {
+      filtro.nome = nome
+    }
+
+    if (id_tipo_ocorrencia) {
+      filtro.id_tipo_ocorrencia = parseInt(id_tipo_ocorrencia)
     }
 
     return filtro;

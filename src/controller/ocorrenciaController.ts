@@ -1,27 +1,27 @@
 import { FastifyRequest } from "fastify";
-import { ITipoOcorrenciaService } from "../interfaces/services/ITipoOcorrenciaService";
-import { TipoOcorrenciaService } from "../service/TipoOcorrenciaService";
+import { IOcorrenciaService } from "../interfaces/services/IOcorrenciaService";
+import { OcorrenciaService } from "../service/OcorrenciaService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
-export class TipoOcorrenciaController extends BaseController{
+export class OcorrenciaController extends BaseController{
 
-    private tipoOcorrService: ITipoOcorrenciaService;
+    private ocorrService: IOcorrenciaService;
     /**
      *
      */
     constructor() {
         super();
-        this.tipoOcorrService = new TipoOcorrenciaService(); 
+        this.ocorrService = new OcorrenciaService(); 
     }
 
-    public async ResgatarTipoOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
+    public async ResgatarOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
             const filtro = super.resgatarIdParam(request)
             
-            result = await this.tipoOcorrService.getTipoOcorrencia(filtro)
+            result = await this.ocorrService.getOcorrencia(filtro)
     
             return result;
         } catch(error) {
@@ -31,11 +31,11 @@ export class TipoOcorrenciaController extends BaseController{
         }
     }
 
-    public async ListagemTipoOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
+    public async ListagemOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
             const filtro = super.resgatarQueryPadrao(request)
-            result = await this.tipoOcorrService.getTipoOcorrencias(filtro)
+            result = await this.ocorrService.getOcorrencias(filtro)
             return result;
         } catch(error) {
             result.sucesso = false;
@@ -45,13 +45,13 @@ export class TipoOcorrenciaController extends BaseController{
 
     }
 
-    public async CadastrarTipoOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
+    public async CadastrarOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
-            const filtro = super.resgatarTipoOcorrenciaBody(request)
+            const filtro = super.resgatarOcorrenciaBody(request)
             
-            result = await this.tipoOcorrService.createTipoOcorrencia(filtro)
+            result = await this.ocorrService.createOcorrencia(filtro)
     
             return result;
         } catch(error) {
@@ -61,17 +61,17 @@ export class TipoOcorrenciaController extends BaseController{
         }
     }
     
-    public async AtualizarTipoOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
+    public async AtualizarOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
 
             const filtroid = super.resgatarIdParam(request)
 
-            const filtroCat = super.resgatarTipoOcorrenciaBody(request)
+            const filtroCat = super.resgatarOcorrenciaBody(request)
             
             const filtro = {...filtroid, ...filtroCat}
 
-            result = await this.tipoOcorrService.updateTipoOcorrencia(filtro)
+            result = await this.ocorrService.updateOcorrencia(filtro)
     
             return result;
         } catch(error) {

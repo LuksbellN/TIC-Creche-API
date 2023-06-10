@@ -4,17 +4,17 @@ import { FornecedorRepository } from "../repository/FornecedorRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class FornecedorService implements IFornecedorService {
-    private catRepository: IFornecedorRepository;
+    private forRepository: IFornecedorRepository;
 
     constructor() {
-        this.catRepository = new FornecedorRepository();
+        this.forRepository = new FornecedorRepository();
     }
 
     public async getFornecedor(filtro: { id: number }): Promise<RespostaApi> {
 
         //Qualquer lógica ou validação necessária deve ser implementada nessa camada de serviços
 
-        return await this.catRepository.getFornecedor(filtro);
+        return await this.forRepository.getFornecedor(filtro);
     }
 
     public async getFornecedors(filtro: any): Promise<RespostaApi> {
@@ -31,24 +31,24 @@ export class FornecedorService implements IFornecedorService {
             filtro.ordenacao = ["nome_fornecedor", "asc"];
         }
 
-        return await this.catRepository.getFornecedors(filtro);
+        return await this.forRepository.getFornecedors(filtro);
     }
 
     public async createFornecedor(filtro: any): Promise<RespostaApi> {
 
-        return await this.catRepository.createFornecedor(filtro);
+        return await this.forRepository.createFornecedor(filtro);
     }
 
     public async updateFornecedor(filtro: any): Promise<RespostaApi> {
 
-        return await this.catRepository.updateFornecedor(filtro);
+        return await this.forRepository.updateFornecedor(filtro);
     }
 
     // TODO melhorar - reflection 
     private getForPropriedades(): string[] {
-        const propriedadesPatrimonio: string[] = ['id', 'nome_fornecedor', 'documento'];
+        const propriedadesFornecedor: string[] = ['id', 'nome_fornecedor', 'documento'];
 
-        return [...propriedadesPatrimonio];
+        return [...propriedadesFornecedor];
     }
 
 }

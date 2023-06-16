@@ -1,5 +1,5 @@
 import { IPatrimonioService } from "../interfaces/services/IPatrimonioService";
-import { PatrimonioService } from "../service/PatrimonioService";
+import { patrimonioService } from "../service/PatrimonioService";
 import { FastifyRequest } from "fastify/types/request";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
@@ -7,28 +7,21 @@ import RespostaApi from "../model/respostaApi";
 export class PatrimonioController extends BaseController{
 
     private patService: IPatrimonioService;
-    /**
-     *
-     */
-    constructor() {
+    
+    constructor(patService: IPatrimonioService) {
         super();
-        this.patService = new PatrimonioService(); 
+        this.patService = patService; 
     }
 
     public async ResgatarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
-        try{
 
             const filtro = super.resgatarIdParam(request)
             
             result = await this.patService.getPatrimonio(filtro)
     
             return result;
-        } catch(error) {
-            result.sucesso = false;
-            result.error = error;
-            return result
-        }
+
     }
 
     public async ListagemPatrimonios(request: FastifyRequest): Promise<RespostaApi>{
@@ -96,8 +89,8 @@ export class PatrimonioController extends BaseController{
             return result;
         }
     }
-
-
-
 }
 
+export const patController = new PatrimonioController(
+    patrimonioService
+);

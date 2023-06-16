@@ -96,6 +96,6 @@ export class DepartamentoRepository implements IDepartamentoRepository{
         }
     }
 
-
-
 }
+
+export const depRepository = new DepartamentoRepository();

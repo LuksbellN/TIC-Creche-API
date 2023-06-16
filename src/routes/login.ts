@@ -3,9 +3,9 @@ import { LoginController } from "../controller/loginController";
 
 export async function loginRoutes(app: FastifyInstance) {
     const loginController = new LoginController(app)
-    app.post('/login', async (request) => {
-        const token = loginController.Login(request);
+    app.post('/api/login', async (request) => {
+        const result = loginController.Login(request);
 
-        return token
+        return result
     })
 }

@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { FornecedorController } from '../controller/fornecedorController';
+import { forController } from '../controller/fornecedorController';
 import RespostaApi from '../model/respostaApi';
 
 
 export async function fornecedorRoutes(app: FastifyInstance) {
-  const fornController = new FornecedorController()
+  const fornecedorController = forController;
   
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify();
@@ -12,25 +12,25 @@ export async function fornecedorRoutes(app: FastifyInstance) {
 
   // Resgatar a listagem de fornecedors conforme filtros
   app.get('/fornecedor', async (request, reply) => {
-    const result: RespostaApi = await fornController.ListagemFornecedor(request);
+    const result: RespostaApi = await fornecedorController.ListagemFornecedor(request);
     reply.send(result)
   })
 
   // Resgatar fornecedor pelo ID
   app.get('/fornecedor/:id', async (request, reply) => {
-    const result: RespostaApi = await fornController.ResgatarFornecedor(request);
+    const result: RespostaApi = await fornecedorController.ResgatarFornecedor(request);
     reply.send(result)
   })
 
   // Criar fornecedor
   app.post('/fornecedor', async (request, reply) => {
-    const result: RespostaApi = await fornController.CadastrarFornecedor(request);
+    const result: RespostaApi = await fornecedorController.CadastrarFornecedor(request);
     reply.send(result)
   })
 
   // Atualizar N campos de um fornecedor
   app.patch('/fornecedor/:id', async (request, reply) => {
-    const result: RespostaApi = await fornController.AtualizarFornecedor(request);
+    const result: RespostaApi = await fornecedorController.AtualizarFornecedor(request);
     reply.send(result)
   })
 

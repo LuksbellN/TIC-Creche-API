@@ -1,13 +1,13 @@
 import { IDepartamentoService } from "../interfaces/services/IDepartamentoService";
 import { IDepartamentoRepository } from "../interfaces/repositories/IDepartamentoRepository";
-import { DepartamentoRepository } from "../repository/DepartamentoRepository";
+import { depRepository } from "../repository/DepartamentoRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class DepartamentoService implements IDepartamentoService {
     private depRepository: IDepartamentoRepository;
 
-    constructor() {
-        this.depRepository = new DepartamentoRepository();
+    constructor(depRepository: IDepartamentoRepository) {
+        this.depRepository = depRepository;
     }
 
     public async getDepartamento(filtro: { id: number }): Promise<RespostaApi> {
@@ -50,5 +50,8 @@ export class DepartamentoService implements IDepartamentoService {
 
         return [...propriedadesDepartamento];
     }
-
 }
+
+export const depService = new DepartamentoService(
+    depRepository
+);

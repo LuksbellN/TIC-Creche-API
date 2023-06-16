@@ -1,13 +1,13 @@
 import { IFornecedorService } from "../interfaces/services/IFornecedorService";
 import { IFornecedorRepository } from "../interfaces/repositories/IFornecedorRepository";
-import { FornecedorRepository } from "../repository/FornecedorRepository";
+import { forRepository } from "../repository/FornecedorRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class FornecedorService implements IFornecedorService {
     private forRepository: IFornecedorRepository;
 
-    constructor() {
-        this.forRepository = new FornecedorRepository();
+    constructor(forRepository: IFornecedorRepository) {
+        this.forRepository = forRepository
     }
 
     public async getFornecedor(filtro: { id: number }): Promise<RespostaApi> {
@@ -17,7 +17,7 @@ export class FornecedorService implements IFornecedorService {
         return await this.forRepository.getFornecedor(filtro);
     }
 
-    public async getFornecedors(filtro: any): Promise<RespostaApi> {
+    public async getFornecedores(filtro: any): Promise<RespostaApi> {
 
         const forPropriedades = this.getForPropriedades();
 
@@ -31,7 +31,8 @@ export class FornecedorService implements IFornecedorService {
             filtro.ordenacao = ["nome_fornecedor", "asc"];
         }
 
-        return await this.forRepository.getFornecedors(filtro);
+        console.log(ordenacaoValida)
+        return await this.forRepository.getFornecedores(filtro);
     }
 
     public async createFornecedor(filtro: any): Promise<RespostaApi> {
@@ -52,3 +53,7 @@ export class FornecedorService implements IFornecedorService {
     }
 
 }
+
+export const forService = new FornecedorService(
+    forRepository
+);

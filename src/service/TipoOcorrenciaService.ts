@@ -1,13 +1,13 @@
 import { ITipoOcorrenciaService } from "../interfaces/services/ITipoOcorrenciaService";
 import { ITipoOcorrenciaRepository } from "../interfaces/repositories/ITipoOcorrenciaRepository";
-import { TipoOcorrenciaRepository } from "../repository/TipoOcorrenciaRepository";
+import { tipoOcorrRepository } from "../repository/TipoOcorrenciaRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class TipoOcorrenciaService implements ITipoOcorrenciaService {
     private tipoOcorrRepository: ITipoOcorrenciaRepository;
 
-    constructor() {
-        this.tipoOcorrRepository = new TipoOcorrenciaRepository();
+    constructor(tipoOcorrRepository: ITipoOcorrenciaRepository) {
+        this.tipoOcorrRepository = tipoOcorrRepository;
     }
 
     public async getTipoOcorrencia(filtro: { id: number }): Promise<RespostaApi> {
@@ -52,3 +52,8 @@ export class TipoOcorrenciaService implements ITipoOcorrenciaService {
     }
 
 }
+
+
+export const tipoOcorrService = new TipoOcorrenciaService(
+    tipoOcorrRepository
+)

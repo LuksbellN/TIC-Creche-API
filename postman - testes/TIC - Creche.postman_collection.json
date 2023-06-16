@@ -1,0 +1,702 @@
+{
+	"info": {
+		"_postman_id": "8fe00d59-8be5-401a-a08d-66491f0ba057",
+		"name": "TIC - Creche",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "22720020"
+	},
+	"item": [
+		{
+			"name": "Login - Users",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"teste13@gmail.com\",\r\n    \"userName\": \"Lucas\",\r\n    \"senha\": \"1234\",\r\n    \"id_departamento\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"teste12@gmail.com\",\r\n    \"senha\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patrimonios",
+			"item": [
+				{
+					"name": "patrimonio - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjQyNzU4LCJleHAiOjE2ODg4MzQ3NTh9.udCTUDQfVt9MoSRdah8uwhXsSuZbcuiksF7NCNNl7ms",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/patrimonio?tipo=pref-adq&categoria=1&departamento=1&ordenacao=nome-desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"patrimonio"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "pref-adq"
+								},
+								{
+									"key": "categoria",
+									"value": "1"
+								},
+								{
+									"key": "departamento",
+									"value": "1"
+								},
+								{
+									"key": "ordenacao",
+									"value": "nome-desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patrimonio",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/patrimonio/8"
+					},
+					"response": []
+				},
+				{
+					"name": "add Patrimonio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MTgwNzcxLCJleHAiOjE2ODg3NzI3NzF9.IMJCOoGAE7zNce7Avlb3iQc9Zea9yLSidvzJWK691L4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipo\": \"doa\",\r\n    \"nome\": \"Teste doacao 4\",\r\n    \"id_fornecedor\": \"1\",\r\n    \"id_categoria\": \"1\",\r\n    \"id_departamento\": \"1\",\r\n    \"dataAquisicao\": \"2023-10-13\",\r\n    \"estado\": \"5\",\r\n    \"imagem_url\": \"\",\r\n    \"nome_doador\": \"José da silva\",\r\n    \"telefone\": \"992653763\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/patrimonio"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patrimonio",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"tipo\": \"adq\",\r\n            \"valor\": \"200\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/patrimonio/4"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete patrimonio",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjY4MDQxLCJleHAiOjE2ODg4NjAwNDF9.1SGg5mJKRPZWTAJNnV0391GRhg5WNryExjGRFTba390",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/patrimonio/8"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "File upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjczNjI5LCJleHAiOjE2ODg4NjU2Mjl9.6yNu_Tan7fjgYuPrdZfEmOr4pZBaLGnCeqFahsAU2pU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/D:/Wallpapers-main/blue-sky-scenery-landscape-pixel-art-digital-art-4k-wallpaper-uhdpaper.com-763@0@i.jpg"
+								}
+							]
+						},
+						"url": "http://localhost:3333/upload"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "categoria - id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/categoria/1"
+					},
+					"response": []
+				},
+				{
+					"name": "categorias - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/categoria?ordenacao=id-asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"categoria"
+							],
+							"query": [
+								{
+									"key": "ordenacao",
+									"value": "id-asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Categoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_categoria\": \"eletrodomestico\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/categoria"
+					},
+					"response": []
+				},
+				{
+					"name": "update Categoria",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_categoria\": \"Lazer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/categoria/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fornecedores",
+			"item": [
+				{
+					"name": "fornecedor - id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/fornecedor/1"
+					},
+					"response": []
+				},
+				{
+					"name": "fornecedor - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/fornecedor?ordenacao=nome_fornecedor-asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"fornecedor"
+							],
+							"query": [
+								{
+									"key": "ordenacao",
+									"value": "nome_fornecedor-asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Fornecedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_fornecedor\": \"Logitech\",\r\n    \"documento\": \"8882734-2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/fornecedor"
+					},
+					"response": []
+				},
+				{
+					"name": "update Fornecedor",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_fornecedor\": \"logitech\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/fornecedor/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Departamentos",
+			"item": [
+				{
+					"name": "departamento - id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/departamento/1"
+					},
+					"response": []
+				},
+				{
+					"name": "departamento - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/departamento?ordenacao=nome_departamento-desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"departamento"
+							],
+							"query": [
+								{
+									"key": "ordenacao",
+									"value": "nome_departamento-desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Departamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_departamento\": \"RH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/departamento"
+					},
+					"response": []
+				},
+				{
+					"name": "update Departamento",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_departamento\": \"rh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/departamento/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tipos Ocorrencia",
+			"item": [
+				{
+					"name": "ocorrencia tipo- id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/ocorrenciatipo/1"
+					},
+					"response": []
+				},
+				{
+					"name": "ocorrencia tipo - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/ocorrenciatipo?ordenacao=id-asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"ocorrenciatipo"
+							],
+							"query": [
+								{
+									"key": "ordenacao",
+									"value": "id-asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Ocorrencia tipo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Venda\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/ocorrenciatipo"
+					},
+					"response": []
+				},
+				{
+					"name": "update Ocorrencia tipo",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Eletrico\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/ocorrenciatipo/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ocorrencias",
+			"item": [
+				{
+					"name": "ocorrencia- id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3333/ocorrenciatipo/1"
+					},
+					"response": []
+				},
+				{
+					"name": "ocorrencia tipo - filtro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3333/ocorrenciatipo?ordenacao=id-asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"ocorrenciatipo"
+							],
+							"query": [
+								{
+									"key": "ordenacao",
+									"value": "id-asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Ocorrencia tipo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Venda\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/ocorrenciatipo"
+					},
+					"response": []
+				},
+				{
+					"name": "update Ocorrencia tipo",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMiLCJkZXBhcnRhbWVudG8iOjEsInN1YiI6IjEyIiwiaWF0IjoxNjg2MjUyODA5LCJleHAiOjE2ODg4NDQ4MDl9.U9mQE1O62dhsuMW_DeJOj2fJIlvC2PBpj5Dbk1XhNcI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Eletrico\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3333/ocorrenciatipo/1"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

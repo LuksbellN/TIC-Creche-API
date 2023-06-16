@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { CategoriaController } from '../controller/categoriaController';
+import { catController } from '../controller/categoriaController';
 import RespostaApi from '../model/respostaApi';
 
 
 export async function categoriaRoutes(app: FastifyInstance) {
-  const catController = new CategoriaController()
+  const categoriaController = catController
   
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify();

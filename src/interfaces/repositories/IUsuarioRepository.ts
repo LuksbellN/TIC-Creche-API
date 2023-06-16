@@ -1,8 +1,9 @@
 import RespostaApi from "../../model/respostaApi";
-import { Usuario } from "../../model/usuario";
 
 export interface IUsuarioRepository{
     getUsuario(email: string, senha: string): Promise<RespostaApi>;
+    getUsuarios(filtro: any): Promise<RespostaApi>;
+    getUsuarioById(filtro: {id: number}): Promise<RespostaApi>;
     getUsuarioByEmail(email: string): Promise<RespostaApi>;
-    createUser(user: Usuario): Promise<RespostaApi>
+    createUser(filtro: any): Promise<RespostaApi>
 }

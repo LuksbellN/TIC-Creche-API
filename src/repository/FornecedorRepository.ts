@@ -25,7 +25,7 @@ export class FornecedorRepository implements IFornecedorRepository {
         }
     }
 
-    public async getFornecedors(filtro: any): Promise<RespostaApi> {
+    public async getFornecedores(filtro: any): Promise<RespostaApi> {
         let resp = new RespostaApi;
         const atributoOrdenacao = filtro.ordenacao[0];
         const ordem = filtro.ordenacao[1];
@@ -98,7 +98,6 @@ export class FornecedorRepository implements IFornecedorRepository {
             return resp
         }
     }
-
-
-
 }
+
+export const forRepository = new FornecedorRepository();

@@ -15,12 +15,12 @@ export default class BaseController {
       consulta: z.union([z.string(), z.undefined()])
     });
 
-    const { 
-      tipo, 
-      categoria, 
-      departamento, 
-      data_inicio, 
-      data_fim, 
+    const {
+      tipo,
+      categoria,
+      departamento,
+      data_inicio,
+      data_fim,
       ordenacao,
       consulta } = querySchema.parse(request.query)
 
@@ -29,7 +29,7 @@ export default class BaseController {
     if (tipo) {
       filtro.tipo = tipo.split('-');
     } else {
-      filtro.tipo = []
+      filtro.tipo = ['pref', 'adq', 'doa']
     }
 
     if (categoria) {
@@ -70,7 +70,7 @@ export default class BaseController {
       consulta: z.union([z.string(), z.undefined()])
     });
 
-    const { 
+    const {
       ordenacao,
       consulta } = querySchema.parse(request.query)
 
@@ -79,6 +79,8 @@ export default class BaseController {
     // &ordenacao=nome-asc ou &ordenacao=estado-desc ou ....
     if (ordenacao) {
       filtro.ordenacao = ordenacao.split('-');
+    } else {
+      filtro.ordenacao = [];
     }
 
     if (consulta) {
@@ -89,12 +91,12 @@ export default class BaseController {
   }
 
   // Resgata payload id dos params
-  protected resgatarIdParam(request: FastifyRequest): {id: number}{
+  protected resgatarIdParam(request: FastifyRequest): { id: number } {
     const patSchema = z.object({
       id: z.string()
     })
     const { id } = patSchema.parse(request.params)
-    
+
     return {
       id: parseInt(id)
     }
@@ -258,6 +260,39 @@ export default class BaseController {
     return filtro;
   }
 
+  // Resgata payload de Categoria do body
+  protected resgatarUserBody(request: FastifyRequest): any {
+    const userSchema = z.object({
+      email: z.string(),
+      userName: z.string(),
+      senha: z.string(),
+      id_departamento: z.string()
+    })
+
+    const filtro: any = {}; 
+
+    const filtroUser = userSchema.parse(request.body)
+
+
+    if (filtroUser.email) {
+      filtro.email = filtroUser.email
+    }
+
+    if(filtroUser.userName) {
+      filtro.userName = filtroUser.userName;
+    }
+
+    if(filtroUser.senha) {
+      filtro.senha = filtroUser.senha;
+    }
+
+    if(filtroUser.id_departamento) {
+      filtro.id_departamento = parseInt(filtroUser.id_departamento);
+    }
+
+    return filtro;
+  }
+
   // Resgata payload de Fornecedor do body
   protected resgatarFornecedorBody(request: FastifyRequest): any {
     const patSchema = z.object({
@@ -282,11 +317,11 @@ export default class BaseController {
   }
 
   // Resgata arquivo upload
-  protected async resgatarArquivoUpload(request: FastifyRequest){
+  protected async resgatarArquivoUpload(request: FastifyRequest) {
     return await request.file({
-      limits:{
-          fileSize: 5_242_880, //5mb
+      limits: {
+        fileSize: 5_242_880, //5mb
       }
-  })
+    })
   }
 }

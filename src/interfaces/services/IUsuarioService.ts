@@ -3,7 +3,8 @@ import { Usuario } from "../../model/usuario";
 
 export interface IUsuarioService{
 
-    getUsuario(id: number): Usuario;
-    registrarUsuario(user: Usuario): Promise<RespostaApi>
+    getUsuario(filtro : {id: number}): Promise<RespostaApi>;
+    getUsuarios(filtro : any): Promise<RespostaApi>;
+    registrarUsuario(filtro: any): Promise<RespostaApi>
     login(email: string, senha: string): Promise<RespostaApi>
 }

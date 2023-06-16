@@ -97,7 +97,6 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
             return resp
         }
     }
-
-
-
 }
+
+export const ocorrRepository = new OcorrenciaRepository();

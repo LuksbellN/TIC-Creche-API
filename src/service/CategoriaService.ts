@@ -1,13 +1,13 @@
 import { ICategoriaService } from "../interfaces/services/ICategoriaService";
 import { ICategoriaRepository } from "../interfaces/repositories/ICategoriaRepository";
-import { CategoriaRepository } from "../repository/CategoriaRepository";
+import { catRepository } from "../repository/CategoriaRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class CategoriaService implements ICategoriaService {
     private catRepository: ICategoriaRepository;
 
-    constructor() {
-        this.catRepository = new CategoriaRepository();
+    constructor(catRepository: ICategoriaRepository) {
+        this.catRepository = catRepository;
     }
 
     public async getCategoria(filtro: { id: number }): Promise<RespostaApi> {
@@ -52,3 +52,7 @@ export class CategoriaService implements ICategoriaService {
     }
 
 }
+
+export const catService = new CategoriaService(
+    catRepository
+);

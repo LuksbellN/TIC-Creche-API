@@ -1,6 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { IFornecedorService } from "../interfaces/services/IFornecedorService";
-import { FornecedorService } from "../service/FornecedorService";
+import { forService } from "../service/FornecedorService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
@@ -10,9 +10,9 @@ export class FornecedorController extends BaseController{
     /**
      *
      */
-    constructor() {
+    constructor(forService: IFornecedorService) {
         super();
-        this.forService = new FornecedorService(); 
+        this.forService = forService;
     }
 
     public async ResgatarFornecedor(request: FastifyRequest): Promise<RespostaApi>{
@@ -35,7 +35,7 @@ export class FornecedorController extends BaseController{
         let result = new RespostaApi;
         try{
             const filtro = super.resgatarQueryPadrao(request)
-            result = await this.forService.getFornecedors(filtro)
+            result = await this.forService.getFornecedores(filtro)
             return result;
         } catch(error) {
             result.sucesso = false;
@@ -80,7 +80,9 @@ export class FornecedorController extends BaseController{
             return result
         }
     }
-
-
 }
+
+export const forController = new FornecedorController(
+    forService
+);
 

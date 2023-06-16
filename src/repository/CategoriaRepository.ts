@@ -94,7 +94,7 @@ export class CategoriaRepository implements ICategoriaRepository{
             return resp
         }
     }
-
-
-
 }
+
+
+export const catRepository = new CategoriaRepository();

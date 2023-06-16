@@ -95,7 +95,6 @@ export class TipoOcorrenciaRepository implements ITipoOcorrenciaRepository {
             return resp
         }
     }
-
-
-
 }
+
+export const tipoOcorrRepository = new TipoOcorrenciaRepository();

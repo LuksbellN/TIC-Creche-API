@@ -1,6 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { IDepartamentoService } from "../interfaces/services/IDepartamentoService";
-import { DepartamentoService } from "../service/DepartamentoService";
+import { depService } from "../service/DepartamentoService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
@@ -10,9 +10,9 @@ export class DepartamentoController extends BaseController{
     /**
      *
      */
-    constructor() {
+    constructor(depService: IDepartamentoService) {
         super();
-        this.catService = new DepartamentoService(); 
+        this.catService = depService; 
     }
 
     public async ResgatarDepartamento(request: FastifyRequest): Promise<RespostaApi>{
@@ -80,7 +80,9 @@ export class DepartamentoController extends BaseController{
             return result
         }
     }
-
-
 }
+
+export const depController = new DepartamentoController(
+    depService
+);
 

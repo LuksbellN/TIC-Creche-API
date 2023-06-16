@@ -1,6 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { ICategoriaService } from "../interfaces/services/ICategoriaService";
-import { CategoriaService } from "../service/CategoriaService";
+import { catService } from "../service/CategoriaService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
@@ -10,9 +10,9 @@ export class CategoriaController extends BaseController{
     /**
      *
      */
-    constructor() {
+    constructor(catService: ICategoriaService) {
         super();
-        this.catService = new CategoriaService(); 
+        this.catService = catService; 
     }
 
     public async ResgatarCategoria(request: FastifyRequest): Promise<RespostaApi>{
@@ -80,7 +80,8 @@ export class CategoriaController extends BaseController{
             return result
         }
     }
-
-
 }
 
+export const catController = new CategoriaController(
+    catService
+)

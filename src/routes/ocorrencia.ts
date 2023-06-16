@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { OcorrenciaController } from '../controller/ocorrenciaController';
+import { ocorrController } from '../controller/ocorrenciaController';
 import RespostaApi from '../model/respostaApi';
 
 
 export async function OcorrenciaRoutes(app: FastifyInstance) {
-  const ocorrController = new OcorrenciaController()
+  const ocorrenciaController = ocorrController;
   
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify();
@@ -12,25 +12,25 @@ export async function OcorrenciaRoutes(app: FastifyInstance) {
 
   // Resgatar a listagem de os de ocorrencias conforme filtros
   app.get('/ocorrencia', async (request, reply) => {
-    const result: RespostaApi = await ocorrController.ListagemOcorrencia(request);
+    const result: RespostaApi = await ocorrenciaController.ListagemOcorrencia(request);
     reply.send(result)
   })
 
   // Resgatar o ocorrencia pelo ID
   app.get('/ocorrencia/:id', async (request, reply) => {
-    const result: RespostaApi = await ocorrController.ResgatarOcorrencia(request);
+    const result: RespostaApi = await ocorrenciaController.ResgatarOcorrencia(request);
     reply.send(result)
   })
 
   // Criar o ocorrencia
   app.post('/ocorrencia', async (request, reply) => {
-    const result: RespostaApi = await ocorrController.CadastrarOcorrencia(request);
+    const result: RespostaApi = await ocorrenciaController.CadastrarOcorrencia(request);
     reply.send(result)
   })
 
   // Atualizar N campos de um o ocorrencia
   app.patch('/ocorrencia/:id', async (request, reply) => {
-    const result: RespostaApi = await ocorrController.AtualizarOcorrencia(request);
+    const result: RespostaApi = await ocorrenciaController.AtualizarOcorrencia(request);
     reply.send(result)
   })
 }

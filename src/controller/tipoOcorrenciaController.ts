@@ -1,6 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { ITipoOcorrenciaService } from "../interfaces/services/ITipoOcorrenciaService";
-import { TipoOcorrenciaService } from "../service/TipoOcorrenciaService";
+import { tipoOcorrService } from "../service/TipoOcorrenciaService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 
@@ -10,9 +10,9 @@ export class TipoOcorrenciaController extends BaseController{
     /**
      *
      */
-    constructor() {
+    constructor(tipoOcorrService: ITipoOcorrenciaService) {
         super();
-        this.tipoOcorrService = new TipoOcorrenciaService(); 
+        this.tipoOcorrService = tipoOcorrService;
     }
 
     public async ResgatarTipoOcorrencia(request: FastifyRequest): Promise<RespostaApi>{
@@ -83,4 +83,9 @@ export class TipoOcorrenciaController extends BaseController{
 
 
 }
+
+
+export const tipoOcorrController = new TipoOcorrenciaController(
+    tipoOcorrService
+);
 

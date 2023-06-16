@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { TipoOcorrenciaController } from '../controller/tipoOcorrenciaController';
+import { tipoOcorrController } from '../controller/tipoOcorrenciaController';
 import RespostaApi from '../model/respostaApi';
 
 
 export async function tipoOcorrenciaRoutes(app: FastifyInstance) {
-  const tipoOcorrController = new TipoOcorrenciaController()
+  const tipoOcorrenciaController = tipoOcorrController;
   
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify();
@@ -12,25 +12,25 @@ export async function tipoOcorrenciaRoutes(app: FastifyInstance) {
 
   // Resgatar a listagem de tipos de ocorrencias conforme filtros
   app.get('/ocorrenciatipo', async (request, reply) => {
-    const result: RespostaApi = await tipoOcorrController.ListagemTipoOcorrencia(request);
+    const result: RespostaApi = await tipoOcorrenciaController.ListagemTipoOcorrencia(request);
     reply.send(result)
   })
 
   // Resgatar tipo ocorrencia pelo ID
   app.get('/ocorrenciatipo/:id', async (request, reply) => {
-    const result: RespostaApi = await tipoOcorrController.ResgatarTipoOcorrencia(request);
+    const result: RespostaApi = await tipoOcorrenciaController.ResgatarTipoOcorrencia(request);
     reply.send(result)
   })
 
   // Criar tipo ocorrencia
   app.post('/ocorrenciatipo', async (request, reply) => {
-    const result: RespostaApi = await tipoOcorrController.CadastrarTipoOcorrencia(request);
+    const result: RespostaApi = await tipoOcorrenciaController.CadastrarTipoOcorrencia(request);
     reply.send(result)
   })
 
   // Atualizar N campos de um tipo ocorrencia
   app.patch('/ocorrenciatipo/:id', async (request, reply) => {
-    const result: RespostaApi = await tipoOcorrController.AtualizarTipoOcorrencia(request);
+    const result: RespostaApi = await tipoOcorrenciaController.AtualizarTipoOcorrencia(request);
     reply.send(result)
   })
 }

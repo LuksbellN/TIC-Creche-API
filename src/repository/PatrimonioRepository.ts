@@ -2,7 +2,10 @@ import { IPatrimonioRepository } from "../interfaces/repositories/IPatrimonioRep
 import { prisma } from "../lib/prisma";
 import RespostaApi from "../model/respostaApi";
 
+
 export class PatrimonioRepository implements IPatrimonioRepository {
+
+  private readonly sqlpadrao: string = "SELECT * FROM Patrimonio";
 
   constructor() {
 
@@ -39,7 +42,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
 
       resp.data = {
         ...patrimonio,
-        patTipo: {...res}
+        patTipo: { ...res }
       };
       resp.sucesso = true;
       return resp;
@@ -60,9 +63,9 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     const consulta = filtro.consulta;
     const atributoOrdenacao = filtro.ordenacao[0];
     const ordem = filtro.ordenacao[1];
-
+    console.log(filtro)
     try {
-      // TODO prisma com erro ao filtrar por periodo - comparar datas
+
       const result = await prisma.patrimonio.findMany({
         where: {
           id_categoria: filtro.categoria,
@@ -160,8 +163,8 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     let resp = new RespostaApi();
 
     try {
-       const pat = await this.getPatrimonio({id: filtroPat.id}); 
-       const patrimonio = await prisma.patrimonio.update({
+      const pat = await this.getPatrimonio({ id: filtroPat.id });
+      const patrimonio = await prisma.patrimonio.update({
         where: {
           id: filtroPat.id
         },
@@ -353,7 +356,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
 
   private async updatePatPrefeitura(idPatPrefeitura: number, campos: any): Promise<RespostaApi> {
     let resp = new RespostaApi();
-  
+
     try {
       let patrimonioPref = await prisma.pat_prefeitura.update({
         where: {
@@ -361,7 +364,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
         },
         data: campos
       })
-  
+
       resp.data = {
         valor: patrimonioPref.valor,
         placa: patrimonioPref.placa
@@ -429,4 +432,8 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     }
 
   }
+
 }
+
+
+export const patRepository = new PatrimonioRepository();

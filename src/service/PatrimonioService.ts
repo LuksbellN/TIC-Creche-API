@@ -2,7 +2,7 @@ import { Patrimonio } from "../model/patrimonio";
 import RespostaApi from "../model/respostaApi";
 import { IPatrimonioService } from "../interfaces/services/IPatrimonioService";
 import { IPatrimonioRepository } from "../interfaces/repositories/IPatrimonioRepository";
-import { PatrimonioRepository } from "../repository/PatrimonioRepository";
+import { patRepository } from "../repository/PatrimonioRepository";
 import { Categoria } from "../model/categoria";
 import { Departamento } from "../model/departamento";
 import { Fornecedor } from "../model/fornecedor";
@@ -10,8 +10,8 @@ import { Fornecedor } from "../model/fornecedor";
 export class PatrimonioService implements IPatrimonioService {
     private patRepository: IPatrimonioRepository;
 
-    constructor() {
-        this.patRepository = new PatrimonioRepository();
+    constructor(patRepository: IPatrimonioRepository) {
+        this.patRepository = patRepository;
     }
 
     public async createPatrimonio(filtroPat: any): Promise<RespostaApi> {
@@ -31,9 +31,6 @@ export class PatrimonioService implements IPatrimonioService {
     }
 
     public async getPatrimonios(filtroPat: any): Promise<RespostaApi> {
-
-
-
         const tipoPref = filtroPat.tipo.includes('pref')
         const tipoDoa = filtroPat.tipo.includes('doa')
         const tipoAdq = filtroPat.tipo.includes('adq')
@@ -42,7 +39,6 @@ export class PatrimonioService implements IPatrimonioService {
 
         const propriedadeOrdenacao = filtroPat.ordenacao[0];
         const direcaoOrdenacao = filtroPat.ordenacao[1];
-        console.log(patPropriedades)
         const ordenacaoValida =
             patPropriedades.includes(propriedadeOrdenacao) &&
             (direcaoOrdenacao === "asc" || direcaoOrdenacao === "desc");
@@ -122,3 +118,7 @@ export class PatrimonioService implements IPatrimonioService {
     }
 
 }
+
+export const patrimonioService = new PatrimonioService(
+    patRepository
+);

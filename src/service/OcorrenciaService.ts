@@ -1,13 +1,13 @@
 import { IOcorrenciaService } from "../interfaces/services/IOcorrenciaService";
 import { IOcorrenciaRepository } from "../interfaces/repositories/IOcorrenciaRepository";
-import { OcorrenciaRepository } from "../repository/OcorrenciaRepository";
+import { ocorrRepository } from "../repository/OcorrenciaRepository";
 import RespostaApi from "../model/respostaApi";
 
 export class OcorrenciaService implements IOcorrenciaService {
     private ocorrRepository: IOcorrenciaRepository;
 
-    constructor() {
-        this.ocorrRepository = new OcorrenciaRepository();
+    constructor(ocorrRepository: IOcorrenciaRepository) {
+        this.ocorrRepository = ocorrRepository;
     }
 
     public async getOcorrencia(filtro: { id: number }): Promise<RespostaApi> {
@@ -52,3 +52,7 @@ export class OcorrenciaService implements IOcorrenciaService {
     }
 
 }
+
+export const ocorrService = new OcorrenciaService(
+    ocorrRepository
+)

@@ -263,13 +263,13 @@ export default class BaseController {
   // Resgata payload de Categoria do body
   protected resgatarUserBody(request: FastifyRequest): any {
     const userSchema = z.object({
-      email: z.string(),
-      userName: z.string(),
-      senha: z.string(),
-      id_departamento: z.string()
+      userName: z.union([z.string(), z.undefined()]),
+      email: z.union([z.string(), z.undefined()]),
+      senha: z.union([z.string(), z.undefined()]),
+      id_departamento: z.union([z.string(), z.undefined()])
     })
 
-    const filtro: any = {}; 
+    const filtro: any = {};
 
     const filtroUser = userSchema.parse(request.body)
 
@@ -278,15 +278,15 @@ export default class BaseController {
       filtro.email = filtroUser.email
     }
 
-    if(filtroUser.userName) {
+    if (filtroUser.userName) {
       filtro.userName = filtroUser.userName;
     }
 
-    if(filtroUser.senha) {
+    if (filtroUser.senha) {
       filtro.senha = filtroUser.senha;
     }
 
-    if(filtroUser.id_departamento) {
+    if (filtroUser.id_departamento) {
       filtro.id_departamento = parseInt(filtroUser.id_departamento);
     }
 

@@ -11,26 +11,26 @@ export async function categoriaRoutes(app: FastifyInstance) {
   })
 
   // Resgatar a listagem de categorias conforme filtros
-  app.get('/categoria', async (request, reply) => {
-    const result: RespostaApi = await catController.ListagemCategoria(request);
+  app.get('/api/categoria', async (request, reply) => {
+    const result: RespostaApi = await categoriaController.ListagemCategoria(request);
     reply.send(result)
   })
 
   // Resgatar categoria pelo ID
-  app.get('/categoria/:id', async (request, reply) => {
-    const result: RespostaApi = await catController.ResgatarCategoria(request);
+  app.get('/api/categoria/:id', async (request, reply) => {
+    const result: RespostaApi = await categoriaController.ResgatarCategoria(request);
     reply.send(result)
   })
 
   // Criar categoria
-  app.post('/categoria', async (request, reply) => {
-    const result: RespostaApi = await catController.CadastrarCategoria(request);
+  app.post('/api/categoria', async (request, reply) => {
+    const result: RespostaApi = await categoriaController.CadastrarCategoria(request);
     reply.send(result)
   })
 
   // Atualizar N campos de um categoria
-  app.patch('/categoria/:id', async (request, reply) => {
-    const result: RespostaApi = await catController.AtualizarCategoria(request);
+  app.patch('/api/categoria/:id', async (request, reply) => {
+    const result: RespostaApi = await categoriaController.AtualizarCategoria(request);
     reply.send(result)
   })
 

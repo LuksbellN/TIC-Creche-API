@@ -1,14 +1,10 @@
 import { FastifyRequest } from "fastify";
-import { forService } from "../service/FornecedorService";
 import BaseController from "./baseController";
 import RespostaApi from "../model/respostaApi";
 import { IUsuarioService } from "../interfaces/services/IUsuarioService";
 import { userService } from "../service/UsuarioService";
 import { IDepartamentoService } from "../interfaces/services/IDepartamentoService";
 import { depService } from "../service/DepartamentoService";
-import { z } from "zod";
-import { Departamento } from "../model/departamento";
-import { Usuario } from "../model/usuario";
 
 export class UsuarioController extends BaseController{
 
@@ -30,6 +26,22 @@ export class UsuarioController extends BaseController{
             const filtro = super.resgatarIdParam(request)
             
             result = await this.userService.getUsuario(filtro)
+    
+            return result;
+        } catch(error) {
+            result.sucesso = false;
+            result.error = error;
+            return result
+        }
+    }
+
+    public async DeletarUsuario(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtro = super.resgatarIdParam(request)
+            
+            result = await this.userService.deleteUsuario(filtro)
     
             return result;
         } catch(error) {
@@ -74,6 +86,26 @@ export class UsuarioController extends BaseController{
             return result
         }
 
+    }
+
+    public async AtualizarUsuario(request: FastifyRequest): Promise<RespostaApi>{
+        let result = new RespostaApi;
+        try{
+
+            const filtroid = super.resgatarIdParam(request)
+
+            const filtroUser = super.resgatarUserBody(request)
+            
+            const filtro = {...filtroid, ...filtroUser}
+
+            result = await this.userService.updateUsuario(filtro)
+    
+            return result;
+        } catch(error) {
+            result.sucesso = false;
+            result.error = error;
+            return result
+        }
     }
     
 }

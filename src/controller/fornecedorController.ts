@@ -67,9 +67,9 @@ export class FornecedorController extends BaseController{
 
             const filtroid = super.resgatarIdParam(request)
 
-            const filtroCat = super.resgatarFornecedorBody(request)
+            const filtroFor = super.resgatarFornecedorBody(request)
             
-            const filtro = {...filtroid, ...filtroCat}
+            const filtro = {...filtroid, ...filtroFor}
 
             result = await this.forService.updateFornecedor(filtro)
     

@@ -8,7 +8,7 @@ export async function uploadRoutes(app: FastifyInstance) {
         await request.jwtVerify();
       })
       
-    app.post('/upload', async (request, reply) => {
+    app.post('/api/upload', async (request, reply) => {
         return uploadController.uploadImg(request, reply);
     })
 }

@@ -5,5 +5,7 @@ export interface IUsuarioRepository{
     getUsuarios(filtro: any): Promise<RespostaApi>;
     getUsuarioById(filtro: {id: number}): Promise<RespostaApi>;
     getUsuarioByEmail(email: string): Promise<RespostaApi>;
-    createUser(filtro: any): Promise<RespostaApi>
+    createUser(filtro: any): Promise<RespostaApi>;
+    updateUsuario(filtro: any): Promise<RespostaApi>;
+    deleteUsuario(filtro: {id: number}): Promise<RespostaApi>;
 }

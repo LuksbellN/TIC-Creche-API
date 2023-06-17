@@ -30,4 +30,15 @@ export async function usersRoutes(app: FastifyInstance) {
             statusCode: 200
         };
     })
+
+    // Atualizar N campos de um usuario
+    app.patch('/api/usuario/:id', async (request, reply) => {
+        const result = await usuarioController.AtualizarUsuario(request);
+        return result;
+    })
+
+    app.delete('/api/usuario/:id', async (request) => {
+        const result = await usuarioController.DeletarUsuario(request);
+        return result;
+    })
 }

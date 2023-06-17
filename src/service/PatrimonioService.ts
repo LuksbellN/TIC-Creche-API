@@ -44,7 +44,7 @@ export class PatrimonioService implements IPatrimonioService {
             (direcaoOrdenacao === "asc" || direcaoOrdenacao === "desc");
         if (!ordenacaoValida) {
             // Caso a ordenação não seja válida, aplica a ordenação padrão por data de aquisição descendente
-            filtroPat.ordenacao = ["data_aquisicao", "desc"];
+            filtroPat.ordenacao = ["id", "asc"];
         }
 
         const result = await this.patRepository.getPatrimonios(filtroPat);

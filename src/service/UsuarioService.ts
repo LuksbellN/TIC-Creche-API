@@ -89,6 +89,15 @@ export class UsuarioService implements IUsuarioService {
         return await this.userRepository.getUsuarioById(filtro);
     }
 
+    public async updateUsuario(filtro: any): Promise<RespostaApi> {
+
+        return await this.userRepository.updateUsuario(filtro);
+    }
+
+    public async deleteUsuario(filtro: {id: number}): Promise<RespostaApi> {
+
+        return await this.userRepository.deleteUsuario(filtro);
+    }
 
     // TODO melhorar - reflection 
     private getUserPropriedades(): string[] {

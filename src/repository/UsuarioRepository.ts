@@ -41,7 +41,11 @@ export class UsuarioRepository implements IUsuarioRepository {
                     id: filtro.id
                 }
             })
-            resp.data = user;
+            resp.data = {
+                userName: user?.userName,
+                email: user?.email,
+                id_departamento: user?.id_departamento
+            }
             resp.sucesso = true;
             return resp;
         } catch (error) {
@@ -116,6 +120,51 @@ export class UsuarioRepository implements IUsuarioRepository {
             resp.sucesso = false;
             resp.error = error;
             return resp;
+        }
+    }
+
+    async deleteUsuario(filtro: {id: number}): Promise<RespostaApi> {
+        let resp = new RespostaApi();
+        try {
+            let user = await prisma.usuario.delete({
+                where: {
+                    id: filtro.id
+                }
+            })
+            resp.data = user;
+            resp.sucesso = true;
+            return resp;
+        } catch (error) {
+            resp.data = null;
+            resp.sucesso = false;
+            resp.error = error;
+            return resp;
+        }
+    }
+
+    async updateUsuario(filtro: any): Promise<RespostaApi> {
+        let resp = new RespostaApi;
+
+        try {
+            const result = await prisma.usuario.update({
+                where: {
+                    id: filtro.id
+                },
+                data: {
+                    userName: filtro.userName,
+                    email: filtro.email,
+                    id_departamento: filtro.id_departamento
+                }
+            })
+
+            resp.data = result;
+            resp.sucesso = true;
+            return resp;
+
+        } catch (error) {
+            resp.sucesso = false;
+            resp.error = error;
+            return resp
         }
     }
 

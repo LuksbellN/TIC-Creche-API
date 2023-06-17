@@ -11,25 +11,25 @@ export async function fornecedorRoutes(app: FastifyInstance) {
   })
 
   // Resgatar a listagem de fornecedors conforme filtros
-  app.get('/fornecedor', async (request, reply) => {
+  app.get('/api/fornecedor', async (request, reply) => {
     const result: RespostaApi = await fornecedorController.ListagemFornecedor(request);
     reply.send(result)
   })
 
   // Resgatar fornecedor pelo ID
-  app.get('/fornecedor/:id', async (request, reply) => {
+  app.get('/api/fornecedor/:id', async (request, reply) => {
     const result: RespostaApi = await fornecedorController.ResgatarFornecedor(request);
     reply.send(result)
   })
 
   // Criar fornecedor
-  app.post('/fornecedor', async (request, reply) => {
+  app.post('/api/fornecedor', async (request, reply) => {
     const result: RespostaApi = await fornecedorController.CadastrarFornecedor(request);
     reply.send(result)
   })
 
   // Atualizar N campos de um fornecedor
-  app.patch('/fornecedor/:id', async (request, reply) => {
+  app.patch('/api/fornecedor/:id', async (request, reply) => {
     const result: RespostaApi = await fornecedorController.AtualizarFornecedor(request);
     reply.send(result)
   })

@@ -107,11 +107,11 @@ export default class BaseController {
     const patSchema = z.object({
       tipo: z.union([z.string(), z.undefined()]),
       nome: z.union([z.string(), z.undefined()]),
-      id_fornecedor: z.union([z.string(), z.undefined()]),
-      id_categoria: z.union([z.string(), z.undefined()]),
-      id_departamento: z.union([z.string(), z.undefined()]),
+      id_fornecedor: z.union([z.number(), z.undefined()]),
+      id_categoria: z.union([z.number(), z.undefined()]),
+      id_departamento: z.union([z.number(), z.undefined()]),
       data_aquisicao: z.union([z.string(), z.undefined()]),
-      estado: z.union([z.string(), z.undefined()]),
+      estado: z.union([z.number(), z.undefined()]),
       imagem_url: z.union([z.string(), z.undefined()]),
       valor: z.union([z.string(), z.undefined()]),
       placa: z.union([z.string(), z.undefined()]),
@@ -124,7 +124,7 @@ export default class BaseController {
 
 
     const filtroPat = patSchema.parse(request.body)
-
+    console.log(filtroPat)
     let filtro: any = {};
 
     if (filtroPat.tipo) {

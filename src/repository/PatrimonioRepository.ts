@@ -30,7 +30,6 @@ export class PatrimonioRepository implements IPatrimonioRepository {
 
       filtroPat.id = patrimonio.id;
       let res = new RespostaApi;
-
       if (filtroPat.tipo === "pref") {
         res = await this.addPatPrefeitura(filtroPat)
       } else if (filtroPat.tipo === "adq") {
@@ -147,7 +146,25 @@ export class PatrimonioRepository implements IPatrimonioRepository {
         }
       })
 
-      resp.data = result;
+      let respAux: any = {}
+
+      if (result) {
+        if (result.PatrimoniosAdquirido?.length > 0) {
+          respAux.valor = result.PatrimoniosAdquirido[0]?.valor
+        } else if(result.PatrimoniosPref?.length > 0) {
+          respAux.valor = result.PatrimoniosPref[0]?.valor
+          respAux.placa = result.PatrimoniosPref[0]?.placa
+        } else if(result.PatrimoniosDoacao?.length > 0) {
+          respAux.nome_doador = result.PatrimoniosDoacao[0]?.nome_doador
+          respAux.telefone = result.PatrimoniosDoacao[0]?.telefone
+        }
+
+      }
+
+      resp.data = {
+        ...result,
+        ...respAux
+      };
       resp.sucesso = true;
       return resp;
 
@@ -179,7 +196,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
         }
       });
 
-      let res = {}
+      let res = new RespostaApi();
 
       if (filtroPat.tipo === "pref") {
         const campos = {
@@ -208,7 +225,7 @@ export class PatrimonioRepository implements IPatrimonioRepository {
         id_categoria: patrimonio.id_categoria,
         id_fornecedor: patrimonio.id_fornecedor,
         estado: patrimonio.estado,
-        ...res
+        ...res.data
       };
       resp.sucesso = true;
       return resp;

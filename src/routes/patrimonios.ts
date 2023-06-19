@@ -29,7 +29,7 @@ export async function patrimonioRoutes(app: FastifyInstance) {
   })
 
   // Atualizar N campos de um patrimônio
-  app.patch('/api/patrimonio/:id', async (request, reply) => {
+  app.put('/api/patrimonio/:id', async (request, reply) => {
     const result: RespostaApi = await patrimonioController.AtualizarPatrimonio(request);
     reply.send(result)
   })

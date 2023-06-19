@@ -41,7 +41,6 @@ export class PatrimonioController extends BaseController{
     public async CadastrarPatrimonio(request: FastifyRequest): Promise<RespostaApi>{
         let result = new RespostaApi;
         try{
-
             const filtro = super.resgatarPatrimonioBody(request)
             
             result = await this.patService.createPatrimonio(filtro)

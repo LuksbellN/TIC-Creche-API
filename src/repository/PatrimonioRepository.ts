@@ -62,7 +62,6 @@ export class PatrimonioRepository implements IPatrimonioRepository {
     const consulta = filtro.consulta;
     const atributoOrdenacao = filtro.ordenacao[0];
     const ordem = filtro.ordenacao[1];
-    console.log(filtro)
     try {
 
       const result = await prisma.patrimonio.findMany({

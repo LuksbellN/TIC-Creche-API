@@ -124,7 +124,6 @@ export default class BaseController {
 
 
     const filtroPat = patSchema.parse(request.body)
-    console.log(filtroPat)
     let filtro: any = {};
 
     if (filtroPat.tipo) {
@@ -266,7 +265,7 @@ export default class BaseController {
       userName: z.union([z.string(), z.undefined()]),
       email: z.union([z.string(), z.undefined()]),
       senha: z.union([z.string(), z.undefined()]),
-      id_departamento: z.union([z.string(), z.undefined()])
+      id_departamento: z.union([z.number(), z.undefined()])
     })
 
     const filtro: any = {};
@@ -287,7 +286,7 @@ export default class BaseController {
     }
 
     if (filtroUser.id_departamento) {
-      filtro.id_departamento = parseInt(filtroUser.id_departamento);
+      filtro.id_departamento = filtroUser.id_departamento;
     }
 
     return filtro;

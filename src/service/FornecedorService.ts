@@ -31,7 +31,6 @@ export class FornecedorService implements IFornecedorService {
             filtro.ordenacao = ["nome_fornecedor", "asc"];
         }
 
-        console.log(ordenacaoValida)
         return await this.forRepository.getFornecedores(filtro);
     }
 

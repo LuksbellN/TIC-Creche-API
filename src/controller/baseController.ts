@@ -1,5 +1,5 @@
 import { FastifyRequest } from "fastify";
-import { z } from "zod";
+import { number, z } from "zod";
 
 export default class BaseController {
 
@@ -111,9 +111,9 @@ export default class BaseController {
       id_categoria: z.union([z.number(), z.undefined()]),
       id_departamento: z.union([z.number(), z.undefined()]),
       data_aquisicao: z.union([z.string(), z.undefined()]),
-      estado: z.union([z.number(), z.undefined()]),
+      estado: z.union([z.string(), z.undefined()]),
       imagem_url: z.union([z.string(), z.undefined()]),
-      valor: z.union([z.string(), z.undefined()]),
+      valor: z.union([z.number(), z.undefined()]),
       placa: z.union([z.string(), z.undefined()]),
       nome_doador: z.union([z.string(), z.undefined()]),
       telefone: z.union([z.string(), z.undefined()]),
@@ -265,7 +265,7 @@ export default class BaseController {
       userName: z.union([z.string(), z.undefined()]),
       email: z.union([z.string(), z.undefined()]),
       senha: z.union([z.string(), z.undefined()]),
-      id_departamento: z.union([z.number(), z.undefined()])
+      id_departamento: z.union([z.string(), z.number(), z.undefined()])
     })
 
     const filtro: any = {};
@@ -286,7 +286,7 @@ export default class BaseController {
     }
 
     if (filtroUser.id_departamento) {
-      filtro.id_departamento = filtroUser.id_departamento;
+        filtro.id_departamento = Number(filtroUser.id_departamento);
     }
 
     return filtro;

@@ -65,7 +65,6 @@ export class UsuarioController extends BaseController{
             }
             result = await this.userService.registrarUsuario(filtro)
     
-    
             return result;
         } catch(error) {
             result.sucesso = false;
